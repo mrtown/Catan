@@ -1,0 +1,882 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" type="text/css" href="theme.css"/>
+    <meta charset="utf-8"/>
+    <title>The Settlers of Catan</title>
+</head>
+
+
+    <body style="background: linear-gradient(to right, lightgrey , grey);">
+        <table>
+            <tr style="font-size:40px;">
+                <td>
+                    <img src="Image/woodResource.png" onclick="ResourceClick('wood')"/>
+                </td>
+                <td>
+                    <div id="woodCounter">2</div>
+                </td>
+                <td>
+                    <img src="Image/woolResource.png" onclick="ResourceClick('wool')"/>
+                </td>
+                <td>
+                    <div id="woolCounter">3</div>
+                </td>
+                <td>
+                    <img src="Image/brickResource.png" onclick="ResourceClick('brick')"/>
+                </td>
+                <td>
+                    <div id="brickCounter">5</div>
+                </td>
+                <td>
+                    <img src="Image/oreResource.png" onclick="ResourceClick('ore')"/>
+                </td>
+                <td>
+                    <div id="oreCounter">2</div>
+                </td>
+                <td>
+                    <img src="Image/wheatResource.png" onclick="ResourceClick('wheat')"/>
+                </td>
+                <td>
+                    <div id="wheatCounter">1</div>
+                </td>
+                <td style="padding-left:580px;">
+                    <img src="/Image/dice2.png" id="imageRolled" style="visibility:hidden;" />
+                </td>
+            </tr>
+        </table>
+        <div id="divOutputWindow" style="border-style:groove; font-size:25px; width:1190px; background-color:beige;">Loading...</div>
+        <table>              
+            <tr>
+                <td rowspan="4" colspan="6">
+                    <canvas id="mainCanvas" width="1190" height="980" style="background:url(Image/water.png);border-style:double;" />
+                </td>
+                <td>
+
+                    <table>
+                        <tr>
+                            <td colspan="7"><h3>TRADE</h3></td>
+                        </tr>
+                        <tr>    
+                                <td style="padding-left:25px;"><div id="giveWood">0</div></td>
+                                <td style="padding-left:25px;"><div id="giveWool">0</div></td>
+                                <td style="padding-left:25px;"><div id="giveBrick">0</div></td>
+                                <td style="padding-left:25px;"><div id="giveOre">0</div></td>
+                                <td style="padding-left:25px;"><div id="giveWheat">0</div></td>
+                        </tr>
+                        <tr>    
+                                <td style="padding-left:8px;"><input type="button" value="Give"  onclick="Give('giveWood','takeWood')"/></td>
+                                <td style="padding-left:8px;"><input type="button" value="Give"  onclick="Give('giveWool', 'takeWool')" /></td>
+                                <td style="padding-left:8px;"><input type="button" value="Give"  onclick="Give('giveBrick', 'takeBrick')" /></td>
+                                <td style="padding-left:8px;"><input type="button" value="Give"  onclick="Give('giveOre', 'takeOre')" /></td>
+                                <td style="padding-left:8px;"><input type="button" value="Give"  onclick="Give('giveWheat', 'takeWheat')" /></td>
+                        </tr>
+                        <tr>
+                                <td style="padding-left:13px;"><img src="Image/woodResource.png" /></td>
+                                <td style="padding-left:13px;"><img src="Image/woolResource.png" /></td>
+                                <td style="padding-left:13px;"><img src="Image/brickResource.png" /></td>
+                                <td style="padding-left:13px;"><img src="Image/oreResource.png"  /></td>
+                                <td style="padding-left:13px;"><img src="Image/wheatResource.png"  /></td>
+                        </tr>
+                        <tr>    
+                                <td style="padding-left:8px;"><input type="button" value="Take" onclick="Take('giveWood', 'takeWood')"/></td>
+                                <td style="padding-left:8px;"><input type="button" value="Take" onclick="Take('giveWool', 'takeWool')"/></td>
+                                <td style="padding-left:8px;"><input type="button" value="Take" onclick="Take('giveBrick', 'takeBrick')"/></td>
+                                <td style="padding-left:8px;"><input type="button" value="Take" onclick="Take('giveOre', 'takeOre')"/></td>
+                                <td style="padding-left:8px;"><input type="button" value="Take" onclick="Take('giveWheat', 'takeWheat')"/></td>
+                        </tr>
+                        <tr>    
+                                <td style="padding-left:25px;"><div id="takeWood">0</div></td>
+                                <td style="padding-left:25px;"><div id="takeWool">0</div></td>
+                                <td style="padding-left:25px;"><div id="takeBrick">0</div></td>
+                                <td style="padding-left:25px;"><div id="takeOre">0</div></td>
+                                <td style="padding-left:25px;"><div id="takeWheat">0</div></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><br />
+                                <select id="recipientList">
+
+                                </select>                   
+                            </td>
+                           <td colspan="9" style="vertical-align:bottom;">
+                                <input type="button" value="Trade" onclick="Trade()" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="9"><h3>BUILD</h3></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <input type="radio" id="buildRoad" name="build" value="Road"/>Road<br /><br />
+                                <input type="radio" id="buildSettlement" name="build" value="Settlement"/>Settlement<br /><br />
+                                <input type="radio" id="buildCity" name="build" value="City"/>City<br /><br />                          
+                                <input type="radio" id="buildDevelopmentCard" name="build" value="City"/>Development Card
+                            </td>
+                            <td colspan="9" style="vertical-align:bottom;">
+                                <input type="button" value="Build" onclick="Build()" />
+                                <input type="button" value="Cancel" onclick="Cancel()" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="20"><h3>PLAY CARD</h3></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <table>
+                                    <tr>
+                                        <td><input type="radio" id="playKnight" name="play" value="Road"/></td><td><div id="cardCountKnight"></div></td>                                        
+                                    </tr><tr><td><br /></td></tr>
+                                    <tr>
+                                        <td><input type="radio" id="playYearOfPlenty" name="play" value="Settlement"/></td><td><div id="cardCountYearOfPlenty"></div></td>                                    
+                                    </tr><tr><td><br /></td></tr>
+                                    <tr>
+                                        <td><input type="radio" id="playRoadBuilding" name="play" value="City"/></td><td><div id="cardCountRoadBuilding"></div> </td>                                    
+                                    </tr><tr><td><br /></td></tr>
+                                    <tr>
+                                        <td><input type="radio" id="playMonopoly" name="play" value="City"/></td><td><div id="cardCountMonopoly"></div></td>                                    
+                                    </tr><tr><td><br /></td></tr>
+                                    <tr>
+                                        <td><input type="radio" id="playVictoryPoint" name="play" value="City" disabled="true"/></td><td><div id="cardCountVictoryPoint"></div></td>                                    
+                                    </tr><tr><td><br /></td></tr>
+                                </table>                                                                                                                                                                                                                                                                               
+                            </td>
+                            <td colspan="9" style="vertical-align:top;">
+                                <input type="button" value="Play" onclick="PlayCard()" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><br />
+                                <input type="button" value="Roll" style="font-size:15px;" onclick="Roll()" />                                                        
+                            </td>
+                            <td style="padding-left:75px;" colspan="5"><br />
+                                <input type="button" value="Pass" style="font-size:15px;" onclick="Pass()" />
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td colspan="5"><br />
+                                <div id="TradeConfirmDetails" style="visibility:hidden;width:275px;font-size:20px;border-style:groove;">Do you accept 1 brick, 2 wood, 2 wool, 2 ore, 2 wheat for 1 brick, 2 wood, 2 wool, 2 ore, 2 wheat?</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="TradeConfirmDetailsAccept"type="button" value="Accept" style="visibility:hidden;" onclick="ConfirmTrade('yes')" />
+                            </td>
+                            <td colspan="5" style="padding-left:75px;">
+                                <input id="TradeConfirmDetailsDeny" type="button" value="Deny" style="visibility:hidden;" onclick="ConfirmTrade('no')"/>
+                            </td>
+                        </tr>
+
+                    </table>
+            
+                </td>
+            </tr>
+        </table>
+    
+    <audio id="music">
+      <source src="/Audio/catan.mp3" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+    </body>
+
+</html>
+
+
+<script lang="javascript">
+    var ws = new WebSocket("ws://174.118.46.202:64951");
+    var c = document.getElementById("mainCanvas");
+    var ctx = c.getContext("2d");
+    var gameID = getParameterByName('gid');
+    var localID = getParameterByName('pid');
+    var globalGameState = null;
+    var state = null;
+
+    var totalNumberOfImages = 47;
+    var numberOfLoadedImages = 0;
+    var imagePaths;
+    var imageCache = new Object();
+
+    //////////////////
+    var aud = new Audio('/Audio/catan.mp3');
+
+    aud.addEventListener('ended', function () {
+        aud.play();
+    }, false);
+
+    aud.addEventListener('loadeddata', function () {
+        aud.play();
+    }, false);
+    /////////////////////
+
+    PreloadImages();
+
+    function PreloadImages() {
+        imagePaths = new Array();
+        imagePaths[0] = '/Image/woodTile.png';
+        imagePaths[1] = '/Image/woolTile.png';
+        imagePaths[2] = '/Image/wheatTile.png';
+        imagePaths[3] = '/Image/oreTile.png';
+        imagePaths[4] = '/Image/brickTile.png';
+        imagePaths[5] = '/Image/dessertTile.png';
+        imagePaths[6] = '/Image/settlement_red.png';
+        imagePaths[7] = '/Image/settlement_blue.png';
+        imagePaths[8] = '/Image/road_red_1.png';
+        imagePaths[9] = '/Image/road_red_2.png';
+        imagePaths[10] = '/Image/road_red_3.png';
+        imagePaths[11] = '/Image/road_blue_1.png';
+        imagePaths[12] = '/Image/road_blue_2.png';
+        imagePaths[13] = '/Image/road_blue_3.png';
+        imagePaths[14] = '/Image/road_green_1.png';
+        imagePaths[15] = '/Image/road_green_2.png';
+        imagePaths[16] = '/Image/road_green_3.png';
+        imagePaths[17] = '/Image/road_yellow_1.png';
+        imagePaths[18] = '/Image/road_yellow_2.png';
+        imagePaths[19] = '/Image/road_yellow_3.png';
+        imagePaths[20] = '/Image/2.png';
+        imagePaths[21] = '/Image/3.png';
+        imagePaths[22] = '/Image/4.png';
+        imagePaths[23] = '/Image/5.png';
+        imagePaths[24] = '/Image/6.png';
+        imagePaths[25] = '/Image/8.png';
+        imagePaths[26] = '/Image/9.png';
+        imagePaths[27] = '/Image/10.png';
+        imagePaths[28] = '/Image/11.png';
+        imagePaths[29] = '/Image/12.png';
+        imagePaths[30] = '/Image/settlement_green.png';
+        imagePaths[31] = '/Image/settlement_yellow.png';
+        imagePaths[32] = '/Image/city_yellow.png';
+        imagePaths[33] = '/Image/city_green.png';
+        imagePaths[34] = '/Image/city_red.png';
+        imagePaths[35] = '/Image/city_blue.png';
+        imagePaths[36] = '/Image/robber.png';
+        imagePaths[37] = '/Image/ground.png';
+
+        imagePaths[38] = '/Image/woodPort.png';
+        imagePaths[39] = '/Image/orePort.png';
+        imagePaths[40] = '/Image/wheatPort.png';
+        imagePaths[41] = '/Image/woolPort.png';
+        imagePaths[42] = '/Image/brickPort.png';
+        imagePaths[43] = '/Image/randomPort.png';
+
+        imagePaths[44] = '/Image/longestRoad.png';
+        imagePaths[45] = '/Image/largestArmy.png';
+        imagePaths[46] = '/Image/scroll.png';
+
+        for (var i = 0; i < imagePaths.length; i++) {
+            var img = new Image();
+            img.onload = OnImageLoad;
+            img.src = imagePaths[i];
+            imageCache[imagePaths[i]] = img;
+        }
+    }
+
+    function ConfirmTrade(confirm) {
+        if (globalGameState.State.StateTypeString == 'TRADE_CONFIRM') {
+            if (globalGameState.State.RecipientPlayerID == localID) {                
+                ws.send('TRADE_CONFIRM' + ':' + gameID + ':' + localID + ':' + confirm);
+            }
+        }
+
+        SetTradeConfirmPanelVisibility(false);
+    }
+
+    function SetTradeConfirmPanelVisibility(visible, recipientHasEnoughResources) {
+        if (visible) {
+            document.getElementById('TradeConfirmDetails').style.visibility = 'visible';
+
+            if (recipientHasEnoughResources) {
+                document.getElementById('TradeConfirmDetailsAccept').style.visibility = 'visible';
+            }
+
+            document.getElementById('TradeConfirmDetailsDeny').style.visibility = 'visible';
+        }
+        else {
+            document.getElementById('TradeConfirmDetails').style.visibility = 'hidden';
+            document.getElementById('TradeConfirmDetailsAccept').style.visibility = 'hidden';
+            document.getElementById('TradeConfirmDetailsDeny').style.visibility = 'hidden';
+
+        }
+    }
+
+
+    function OnImageLoad() {
+        numberOfLoadedImages++;
+        if (numberOfLoadedImages >= totalNumberOfImages) {
+            var playerID = getParameterByName('pid');
+            var gameID = getParameterByName('gid');
+            //ws = new WebSocket("ws://192.168.0.100:81");
+            ws.send('ENTERING_GAME' + ':' + playerID + ':' + gameID);
+        }
+    }
+
+    function Give(giveType, takeType) {
+        var give = document.getElementById(giveType);
+        var take = document.getElementById(takeType);
+
+        if (parseInt(take.innerHTML) == 0) {
+            var value = parseInt(give.innerHTML);
+            value += 1;
+            give.innerHTML = value;
+        }
+        else {
+            var value = parseInt(take.innerHTML);
+            value -= 1;
+            take.innerHTML = value;
+        }
+
+    }
+
+    function Take(giveType, takeType) {
+        var give = document.getElementById(giveType);
+        var take = document.getElementById(takeType);
+
+        if (parseInt(give.innerHTML) == 0) {
+            var value = parseInt(take.innerHTML);
+            value += 1;
+            take.innerHTML = value;
+        }
+        else {
+            var value = parseInt(give.innerHTML);
+            value -= 1;
+            give.innerHTML = value;
+        }
+    }
+
+    function ResourceClick(resource) {                                                      
+        if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_RESOURCE_FOR_MONOPOLY') {
+            if (globalGameState.State.PlayerID == localID) {
+                ws.send('PLAYER_SELECT_RESOURCE_FOR_MONOPOLY' + ':' + gameID + ':' + localID + ':' + resource);
+            }
+        }        
+    }
+
+
+    //c.onclick = click;    
+    c.onclick = MapClick;
+  
+    function Initialize() {
+   
+    }
+
+    function getParameterByName(name)
+    {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if(results == null)
+            return "";
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    var settlementID = -1;
+    function click(event) {
+        var txtBox = document.getElementById('coordinates');
+        var rect = c.getBoundingClientRect();
+
+
+       // settlementID = GetID(event.pageX - rect.left, event.pageY - rect.top, globalGameState.SettlementCoordinates);
+     //   var roadID = GetID(event.pageX - rect.left, event.pageY - rect.top, globalGameState.RoadCoordinates);
+
+
+        //if (settlementID != -1) {
+        //    txtBox.value += settlementID + ' : ';
+        //} else if (roadID != -1) {
+        //    txtBox.value += roadID + ' : ';
+        //}
+
+        //if (roadID == -1 && settlementID == -1) {
+        //    txtBox.value += '\n';
+        //}
+
+        //alert(Math.round(event.pageX - rect.left - window.pageXOffset) + ', ' + Math.round(event.pageY - rect.top - window.pageYOffset) + '\n');
+        alert(Math.round(event.pageX - rect.left - window.pageXOffset) + ', ' + Math.round(event.pageY - rect.top - window.pageYOffset) + '\n');
+    }
+
+    ws.onopen = function () {
+        var playerID = getParameterByName('pid');
+        var gameID = getParameterByName('gid');
+        ws.send('ENTERING_GAME' + ':' + playerID + ':' + gameID); 
+    };
+
+
+    ws.onmessage = function (evt) {
+        var data = evt.data;
+        var value = JSON.parse(data);
+        ProcessResponse(value);
+    };
+
+
+
+    function MapClick(event) {
+
+        var rect = c.getBoundingClientRect();
+
+        if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_SETTLEMENT') {
+            if (globalGameState.State.PlayerID == localID) {
+                var settlementID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.SettlementCoordinates, 40);                
+                ws.send('PLAYER_SELECT_SETTLEMENT' + ':' + gameID + ':' + localID + ':' + settlementID);
+            }            
+        }
+        else if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_ROAD') {
+            if (globalGameState.State.PlayerID == localID) {
+                var roadID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.RoadCoordinates, 40);
+                ws.send('PLAYER_SELECT_ROAD' + ':' + gameID + ':' + localID + ':' + roadID);
+            }
+        }
+        else if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_CITY') {
+            if (globalGameState.State.PlayerID == localID) {
+                var settlementID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.SettlementCoordinates, 40);
+                ws.send('PLAYER_SELECT_CITY' + ':' + gameID + ':' + localID + ':' + settlementID);
+            }
+        }
+        else if (globalGameState.State.StateTypeString == 'PLAYER_MOVE_ROBBER') {
+            if (globalGameState.State.PlayerID == localID) {
+                var tileID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.TileCoordinates, 40);
+                ws.send('PLAYER_MOVE_ROBBER' + ':' + gameID + ':' + localID + ':' + tileID);
+            }
+        }
+        else if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_PLAYER') {
+            if (globalGameState.State.PlayerID == localID) {
+                var playerID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.PlayerCoordinates, 220);
+                ws.send('PLAYER_SELECT_PLAYER' + ':' + gameID + ':' + localID + ':' + playerID);
+            }
+        }
+    }
+
+
+    function ProcessResponse(value) {
+        if (value.Control == 'GAME_STATE') {
+            ProcessGameState(value.Payload);
+        }
+    }
+
+
+    function ProcessGameState(gameState) {
+        globalGameState = gameState;
+        
+        var status = document.getElementById('divOutputWindow');
+        status.innerHTML = globalGameState.State.CurrentText + ' (' + globalGameState.State.HistoryText + ')';
+
+        if (gameState.Message != null) {
+            status.innerHTML += ' *' + gameState.Message + '*';
+        }
+        
+        
+
+        RenderBoard(globalGameState.Board);
+        RenderDetails();
+        RenderCardCount();
+        RenderPlayerDetails();
+        RenderDiceRoll(gameState);
+        PopulateTradeRecipientList();
+
+        CheckForTradeConfirm();
+
+        CheckForWinner(gameState);
+    }
+
+    function CheckForWinner(gameState) {
+        if (gameState.Winner != null) {
+
+            ctx.fillStyle = 'black';
+            ctx.strokeStyle = 'white';
+
+            ctx.font = '80pt Verdana';
+            ctx.fillText(gameState.Winner + " WINS!", 300, 475);
+            ctx.strokeText(gameState.Winner + " WINS!", 300, 475);
+
+            ctx.fill();
+            ctx.stroke();
+        }
+    }
+
+    function RenderDiceRoll(gameState) {
+        if (gameState.Rolled != 0) {
+            var img = document.getElementById('imageRolled');
+            img.style.visibility = 'visible';
+            img.src = '/Image/dice' + gameState.Rolled + '.png';
+        }
+        else {
+            var img = document.getElementById('imageRolled');
+            img.style.visibility = 'hidden';
+        }
+    }
+
+    function CheckForTradeConfirm() {
+        if (globalGameState.State.StateTypeString == 'TRADE_CONFIRM') {
+            if (globalGameState.State.RecipientPlayerID == localID) {
+                document.getElementById('TradeConfirmDetails').innerHTML = globalGameState.State.TradeConfirmDetails;
+                SetTradeConfirmPanelVisibility(true, globalGameState.State.RecipientHasEnoughResources);
+            }
+        }
+    }
+
+    function DrawText(text, color, x, y) {
+        
+        ctx.fillStyle = color;
+        ctx.strokeStyle = 'black';
+
+        ctx.font = '16pt Verdana';
+        ctx.fillText(text, x, y);
+        ctx.strokeText(text, x, y);
+
+        ctx.fill();
+        ctx.stroke();
+    }
+
+
+
+   
+    function DrawImage(image, x, y) {
+        //ctx.drawImage(imageCache['/Image/ground.png'], 144, -10);
+        ctx.drawImage(image, x, y);
+    }
+
+    function DrawPlayerDetails(player, xOffset, yOffset) {
+
+        DrawImage(imageCache['/Image/scroll.png'], 1 + xOffset, 5 + yOffset);
+
+        DrawText(player.Name, player.Color, 15 + xOffset, 40 + yOffset);
+        DrawText('Resources: ' + player.TotalNumberOfResources, player.Color, 15 + xOffset, 70 + yOffset);
+        DrawText('Dev Cards: ' + player.NumberOfDevCards, player.Color, 15 + xOffset, 90 + yOffset);
+        DrawText('Knights: ' + player.NumberOfKnights, player.Color, 15 + xOffset, 110 + yOffset);
+        DrawText('Road Length: ' + player.LongestRoadLength, player.Color, 15 + xOffset, 130 + yOffset);
+        DrawText('Victory Points: ' + player.DisplayScore, player.Color, 15 + xOffset, 150 + yOffset);
+
+        if (player.HasLongestRoad) {
+            DrawImage(imageCache['/Image/longestRoad.png'], 15 + xOffset, 155 + yOffset);
+        }
+        if (player.HasLargestArmy) {
+            DrawImage(imageCache['/Image/largestArmy.png'], 75 + xOffset, 155+ yOffset);
+        }
+    }
+
+    function SortPlayers(player1, player2) {
+        return player1.PlayerNumber - player2.PlayerNumber;
+    }
+
+    function RenderPlayerDetails() {
+
+        globalGameState.Players.sort(SortPlayers);
+
+        for (var i = 0; i < globalGameState.Players.length; i++) {
+            var p = globalGameState.Players[i];
+
+            if (i == 0) {
+                DrawPlayerDetails(p, 0, 0);
+            }
+            else if (i == 1) {
+                DrawPlayerDetails(p, 990, 0);
+            }
+            else if (i == 2) {
+                DrawPlayerDetails(p, 0, 775);
+            }
+            else if (i == 3) {
+                DrawPlayerDetails(p, 870, 775);
+            }
+        }
+
+    }
+
+    function GetPlayer(playerID) {
+        for (var i = 0; i < globalGameState.Players.length; i++) {
+            if (globalGameState.Players[i].ID == localID) {
+                return globalGameState.Players[i];
+            }
+        }
+
+        return null;
+    }
+
+
+    function GetTradeAmount(resource) {
+        var give = parseInt(document.getElementById('give' + resource).innerHTML);
+        var take = parseInt(document.getElementById('take' + resource).innerHTML);
+
+        return take - give;
+    }
+
+    function Trade() {
+        var recipientList = document.getElementById('recipientList');
+        var recipientID = recipientList.options[recipientList.selectedIndex].value;
+
+        var tradeDetails = new Array();
+
+        tradeDetails.push(GetTradeAmount('Brick'));
+        tradeDetails.push(GetTradeAmount('Ore'));
+        tradeDetails.push(GetTradeAmount('Wheat'));
+        tradeDetails.push(GetTradeAmount('Wood'));
+        tradeDetails.push(GetTradeAmount('Wool'));                
+        
+
+        if (globalGameState.State.StateTypeString == 'PLAYER_TURN' ||
+            globalGameState.State.StateTypeString == 'PLAYER_SELECT_TWO_RESOURCES_FROM_BANK' ||
+            globalGameState.State.StateTypeString == 'PLAYER_PAY_ROBBER') {
+            if (globalGameState.State.PlayerID == localID) {
+                ws.send('PLAYER_TRADE' + ':' + gameID + ':' + localID + ':' + recipientID + ':' + tradeDetails.join(':'));
+            }
+        }
+    }
+
+    function PopulateTradeRecipientList() {
+        var recipientList = document.getElementById('recipientList');
+        var player = GetPlayer(localID);
+        
+        recipientList.options.length = 0;
+
+        for(var i=0; i<player.TradeRecipients.length; i++) {
+            var o = document.createElement("option");
+            o.text = player.TradeRecipients[i].Name;
+            o.value = player.TradeRecipients[i].ID;
+            recipientList.add(o, null);
+        }
+
+    }
+
+    function RenderCardCount() {
+        var knightCount = 0;
+        var yearOfPlentyCount = 0;
+        var roadBuildingCount = 0;
+        var monopolyCount = 0;
+        var victoryPointCount = 0;
+
+        var player;
+        for (var i = 0; i < globalGameState.Players.length; i++) {
+            if (globalGameState.Players[i].ID == localID) {
+                player = globalGameState.Players[i];
+                break;
+            }
+        }
+
+        for (var i = 0; i < player.HeldCards.length; i++) {
+            if (player.HeldCards[i].IsPlayable) {
+                if (player.HeldCards[i].TypeString == "knight") {
+                    knightCount++;
+                }
+                else if (player.HeldCards[i].TypeString == "yearOfPlenty") {
+                    yearOfPlentyCount++;
+                }
+                else if (player.HeldCards[i].TypeString == "roadBuilding") {
+                    roadBuildingCount++;
+                }
+                else if (player.HeldCards[i].TypeString == "monopoly") {
+                    monopolyCount++;
+                }
+                else if (player.HeldCards[i].TypeString == "victoryPoint") {
+                    victoryPointCount++;
+                }
+            }
+        }
+
+        document.getElementById('cardCountKnight').innerHTML = 'Knight (x ' + knightCount + ')';
+        document.getElementById('cardCountYearOfPlenty').innerHTML = 'Year of Plenty (x ' + yearOfPlentyCount + ')';
+        document.getElementById('cardCountRoadBuilding').innerHTML = 'Road Building (x ' + roadBuildingCount + ')';
+        document.getElementById('cardCountMonopoly').innerHTML = 'Monopoly (x ' + monopolyCount + ')';
+        document.getElementById('cardCountVictoryPoint').innerHTML = 'Victory Point (x ' + victoryPointCount + ')';
+
+    }
+
+    function RenderDetails() {
+        var player;
+        for (var i = 0; i < globalGameState.Players.length; i++) {
+            if (globalGameState.Players[i].ID == localID) {
+                player = globalGameState.Players[i];
+            }
+        }
+
+        document.getElementById('woodCounter').innerHTML = player.Wood;
+        document.getElementById('woolCounter').innerHTML = player.Wool;
+        document.getElementById('brickCounter').innerHTML = player.Brick;
+        document.getElementById('oreCounter').innerHTML = player.Ore;
+        document.getElementById('wheatCounter').innerHTML = player.Wheat;
+    }
+
+    function GetImage(path) {
+        
+    }
+
+    function RenderBoard(board) {
+ 
+        c.width = c.width;
+
+        ctx.drawImage(imageCache['/Image/ground.png'], 144, -10);
+
+        // tiles
+        for (var i = 0; i < board.Tiles.length; i++) {
+            ctx.drawImage(imageCache['/Image/' + board.Tiles[i].Image], board.Tiles[i].DrawCoordinate.X, board.Tiles[i].DrawCoordinate.Y);
+        }
+
+        // roads
+        for (var i = 0; i < board.Roads.length; i++) {
+            ctx.drawImage(imageCache['/Image/' + board.Roads[i].Image], board.Roads[i].DrawCoordinate.X, board.Roads[i].DrawCoordinate.Y);
+        }
+
+        // settlements
+        for (var i = 0; i < board.Settlements.length; i++) {
+            ctx.drawImage(imageCache['/Image/' + board.Settlements[i].Image], board.Settlements[i].DrawCoordinate.X, board.Settlements[i].DrawCoordinate.Y);
+        }
+
+        // frequencies/robber
+        for (var i = 0; i < board.Tiles.length; i++) {
+            if (board.Tiles[i].Robber) {
+                ctx.drawImage(imageCache['/Image/' + 'robber.png'], board.Tiles[i].RobberDrawDetails.X, board.Tiles[i].RobberDrawDetails.Y);
+            }
+            else if (board.Tiles[i].Frequency != null) {
+                ctx.drawImage(imageCache['/Image/' + board.Tiles[i].Frequency.Image], board.Tiles[i].Frequency.DrawCoordinate.X, board.Tiles[i].Frequency.DrawCoordinate.Y);
+            }
+        }
+
+        // render ports
+        for (var i = 0; i < board.Ports.length; i++) {
+            ctx.drawImage(imageCache['/Image/' + board.Ports[i].Image], board.Ports[i].DrawCoordinate.X-25, board.Ports[i].DrawCoordinate.Y-25);
+        }
+
+ 
+    }
+
+    function Cancel() {
+        if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_SETTLEMENT' ||
+            globalGameState.State.StateTypeString == 'PLAYER_SELECT_ROAD' ||
+            globalGameState.State.StateTypeString == 'PLAYER_SELECT_CITY') {
+            if (globalGameState.State.PlayerID == localID) {
+                ws.send('PLAYER_CANCEL' + ':' + gameID + ':' + localID);
+            }
+        }
+    }
+
+    function Build() {
+
+        var road = document.getElementById('buildRoad');
+        var settlement = document.getElementById('buildSettlement');
+        var city = document.getElementById('buildCity');
+        var developmentCard = document.getElementById('buildDevelopmentCard');
+
+        var type = null;
+
+        if (!road.checked &&
+            !settlement.checked &&
+            !city.checked &&
+            !developmentCard.checked) {
+            alert('You must select something to build.');
+            return;
+        }
+
+        if (road.checked) {
+            type = "road";
+        }
+        else if (settlement.checked) {
+            type = "settlement";
+        }
+        else if (city.checked) {
+            type = "city";
+        }
+        else if (developmentCard.checked) {
+            type = "developmentCard";
+        }
+
+        if (type == null) {
+            return;
+        }
+
+        if (globalGameState.State.StateTypeString == 'PLAYER_TURN') {
+            if (globalGameState.State.PlayerID == localID) {
+                ws.send('PLAYER_BUILD' + ':' + gameID + ':' + localID + ':' + type);
+            }
+        }
+    }
+
+    function Roll() {
+        if (globalGameState.State.StateTypeString == 'PLAYER_TURN') {
+            if (globalGameState.State.PlayerID == localID) {                
+                ws.send('PLAYER_ROLL' + ':' + gameID + ':' + localID);
+            }
+        }
+    }
+
+    function PlayCard() {
+
+        var knight = document.getElementById('playKnight');
+        var yearOfPlenty = document.getElementById('playYearOfPlenty');
+        var roadBuilding = document.getElementById('playRoadBuilding');
+        var monopoly = document.getElementById('playMonopoly');
+        var victoryPoint = document.getElementById('playVictoryPoint');
+        var type;
+
+        if (knight.checked) {
+            type = 'knight';
+        }
+        else if (yearOfPlenty.checked) {
+            type = 'yearOfPlenty';
+        }
+        else if (roadBuilding.checked) {
+            type = 'roadBuilding';
+        }
+        else if (monopoly.checked) {
+            type = 'monopoly';
+        }
+        else if (victoryPoint.checked) {
+            type = 'victoryPoint';
+        }
+
+        if (globalGameState.State.StateTypeString == 'PLAYER_TURN') {
+            if (globalGameState.State.PlayerID == localID) {
+                ws.send('PLAYER_PLAY_CARD' + ':' + gameID + ':' + localID + ":" + type);
+            }
+        }
+    }
+
+    function Pass() {
+        if (globalGameState.State.StateTypeString == 'PLAYER_TURN') {
+            if (globalGameState.State.PlayerID == localID) {
+                ws.send('PLAYER_PASS' + ':' + gameID + ':' + localID);
+            }
+        }
+    }
+
+
+    function GetID(x, y, boundingCoordinates, boundingRange) {
+        
+        var distance;
+        var minDistance = 999999;
+        var indexOfMinDistance = null;
+
+        for (var i = 0; i < boundingCoordinates.length; i++) {
+            distance = CalculateDistance(x, y, boundingCoordinates[i].X, boundingCoordinates[i].Y);
+            if (distance < minDistance) {
+                minDistance = distance;
+                indexOfMinDistance = i + 1;
+            }
+        }
+
+        if (minDistance <= boundingRange) {
+            return indexOfMinDistance;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    function CalculateDistance(x1, y1, x2, y2) {
+        var yDiff = (y2 - y1);
+        var xDiff = (x2 - x1);
+
+        var xDiffSquared = (xDiff * xDiff);
+        var yDiffSquared = (yDiff * yDiff);
+
+        var result = Math.sqrt((yDiffSquared + xDiffSquared));
+
+
+        return result;
+    }
+
+
+
+
+</script>

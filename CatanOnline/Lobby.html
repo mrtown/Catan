@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Catan Lobby</title>
+</head>
+<body style="background-color:LightGrey;">
+
+<center>
+    <h2>Catan Lobby</h2>
+
+    <div id="lblEnterName">Enter Name:</div> 
+    <input id="txtName" type="text" style="height:15px;width:200px;" />
+    <input id="btnOkName" type="button" value="Continue" onclick="Continue()" />
+
+    <table id="LobbyTable" style="visibility:hidden;">
+        <tr>
+            <td colspan="2"><textarea id="txtChat" style="height:400px;width:400px;"></textarea></td>
+            <td style="vertical-align:top;"><textarea id="txtUsers" style="height:200px;width:150px;"></textarea></td>
+        </tr>
+        <tr>
+            <td><input type="text" id="txtMessage" style="height:15px;width:275px;"></input></td>
+            <td style="vertical-align:top;"><input type="button" id="btnMessage" value="Send" style="height:20px;width:120px;" onclick="SendMessage();"/></td>        
+        </tr>
+        <tr>
+            <td><input type="button" id="btnPlay" value="Play" style="height:20px;width:120px;" onclick="Play();"/></td>
+        </tr>
+    </table>
+    
+    
+</center>
+</body>
+</html>
+
+<script lang="JavaScript">
+    var ws = null;
+    var name = null;
+    var localID = null;
+
+    function Continue() {
+        var txtBox = document.getElementById('txtName');
+        if (txtBox.value.length < 1) {
+            alert('You must enter a name');
+            return;
+        }
+
+        name = txtBox.value;
+
+        Initialize();
+        
+    }
+
+    function SendMessage() {
+        var msg = document.getElementById('txtMessage');
+        ws.send('CHAT_MESSAGE' + ':' + localID + ':' + msg.value);
+        msg.value = '';
+    }
+
+    function Play() {
+        ws.send('START_GAME');
+    }
+
+    function Initialize() {
+
+        document.getElementById('LobbyTable').style.visibility = 'visible';
+        document.getElementById('txtName').style.visibility = 'hidden';
+        document.getElementById('btnOkName').style.visibility = 'hidden';
+        document.getElementById('lblEnterName').style.visibility = 'hidden';
+
+        ws = new WebSocket('ws://174.118.46.202:64951');
+
+        ws.onopen = function () {
+            ws.send('NEW_LOBBY_USER' + ':' + name);
+        };
+
+        ws.onmessage = function (evt) {
+            var data = evt.data;
+            var value = JSON.parse(data);
+
+            ProcessResponse(value);            
+        };
+    }
+
+    function ProcessResponse(value) {
+        if (value.Control == 'NEW_LOBBY_USER') {
+            localID = value.Payload;
+        }
+        if (value.Control == 'CHAT_MESSAGE') {
+            var chatWindow = document.getElementById('txtChat');
+            chatWindow.innerHTML = chatWindow.innerHTML + '\n' + value.Payload;
+        }
+        if (value.Control == 'LOBBY_LIST') {
+            var lobbyList = document.getElementById('txtUsers');
+            lobbyList.value = value.Payload;
+        }
+        if (value.Control == 'START_GAME') {
+            window.location = 'Game.html?pid=' + localID + '&gid=' + value.Payload;
+        }
+    }
+
+
+    //ws.onclose = function () {
+    //    // websocket is closed.
+    //    //   alert("Connection is closed...");
+    //};
+</script>

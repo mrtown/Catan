@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{99271CF6-2F23-49FC-AC7C-A8A11E96A3CC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Catan</RootNamespace>
+    <AssemblyName>Catan</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\AbstractState.cs" />
+    <Compile Include="Entities\Board.cs" />
+    <Compile Include="Entities\AbstractDevelopmentCard.cs" />
+    <Compile Include="Entities\DevelopmentCards\KnightCard.cs" />
+    <Compile Include="Entities\DevelopmentCards\MonopolyCard.cs" />
+    <Compile Include="Entities\DevelopmentCards\RoadBuildingCard.cs" />
+    <Compile Include="Entities\DevelopmentCards\VictoryPointCard.cs" />
+    <Compile Include="Entities\DevelopmentCards\YearOfPlentyCard.cs" />
+    <Compile Include="Entities\DrawCoordinate.cs" />
+    <Compile Include="Entities\Frequency.cs" />
+    <Compile Include="Entities\GameState.cs" />
+    <Compile Include="Entities\LongestRoadTraceState.cs" />
+    <Compile Include="Entities\MapObject.cs" />
+    <Compile Include="Entities\Player.cs" />
+    <Compile Include="Entities\Port.cs" />
+    <Compile Include="Entities\Road.cs" />
+    <Compile Include="Entities\BoundingCoordinates.cs" />
+    <Compile Include="Entities\Settlement.cs" />
+    <Compile Include="Entities\States\PlayerMoveRobber.cs" />
+    <Compile Include="Entities\States\PlayerPayRobber.cs" />
+    <Compile Include="Entities\States\PlayerSelectCity.cs" />
+    <Compile Include="Entities\States\PlayerSelectPlayer.cs" />
+    <Compile Include="Entities\States\PlayerSelectResourceForMonopoly.cs" />
+    <Compile Include="Entities\States\PlayerSelectRoad.cs" />
+    <Compile Include="Entities\States\PlayerSelectSettlement.cs" />
+    <Compile Include="Entities\States\PlayerSelectTwoResourcesFromBank.cs" />
+    <Compile Include="Entities\States\PlayerTurn.cs" />
+    <Compile Include="Entities\States\TradeConfirm.cs" />
+    <Compile Include="Entities\Tile.cs" />
+    <Compile Include="Entities\TradeRecipient.cs" />
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
