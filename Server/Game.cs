@@ -55,7 +55,7 @@ namespace Server
         {
             while (true)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
                 Dictionary<string, double> pingStatuses = new Dictionary<string, double>();
 
                 foreach(User user in _users)
@@ -90,7 +90,7 @@ namespace Server
             
             while (true)
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
                 foreach (User user in users)
                 {
                     string pingID = Guid.NewGuid().ToString();

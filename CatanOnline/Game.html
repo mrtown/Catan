@@ -45,7 +45,7 @@
                     <img src="/Image/dice2.png" id="imageRolled" style="visibility:hidden;" />
                 </td>
                 <td>
-                    <div id="ping" style="font:small;"></div>
+                    <div id="ping" style="font-size:small;padding-left:20px;"></div>
                 </td>
             </tr>
         </table>
@@ -462,14 +462,11 @@
             ProcessPing(value.Payload);
         }
         else if (value.Control == 'PING_STATUSES') {
-            var x = 10;
-            
-            //document.getElementById('ping').innerHTML = value.Payload['asdf'];
-
+            var x = 10;                     
             var pingDisplay = '';
             for (var i = 0; i < globalGameState.Players.length; i++) {
                 var p = globalGameState.Players[i];
-                pingDisplay += p.Name + ' ' + value.Payload[p.Name];
+                pingDisplay += p.Name + ' ' + value.Payload[p.Name] + '\n';
             }
     
             document.getElementById('ping').innerHTML = pingDisplay;
