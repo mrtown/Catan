@@ -44,6 +44,9 @@
                 <td style="padding-left:580px;">
                     <img src="/Image/dice2.png" id="imageRolled" style="visibility:hidden;" />
                 </td>
+                <td>
+                    <div id="ping" style="font:small;"></div>
+                </td>
             </tr>
         </table>
         <div id="divOutputWindow" style="border-style:groove; font-size:25px; width:1190px; background-color:beige;">Loading...</div>
@@ -205,11 +208,11 @@
     var aud = new Audio('/Audio/catan.mp3');
 
     aud.addEventListener('ended', function () {
-        aud.play();
+     //   aud.play();
     }, false);
 
     aud.addEventListener('loadeddata', function () {
-        aud.play();
+      //  aud.play();
     }, false);
     /////////////////////
 
@@ -455,8 +458,28 @@
         if (value.Control == 'GAME_STATE') {
             ProcessGameState(value.Payload);
         }
+        else if (value.Control == 'PING') {
+            ProcessPing(value.Payload);
+        }
+        else if (value.Control == 'PING_STATUSES') {
+            var x = 10;
+            
+            //document.getElementById('ping').innerHTML = value.Payload['asdf'];
+
+            var pingDisplay = '';
+            for (var i = 0; i < globalGameState.Players.length; i++) {
+                var p = globalGameState.Players[i];
+                pingDisplay += p.Name + ' ' + value.Payload[p.Name];
+            }
+    
+            document.getElementById('ping').innerHTML = pingDisplay;
+        }
+
     }
 
+    function ProcessPing(pingID) {
+        ws.send('PING' + ':' + gameID + ':' + localID + ':' + pingID);
+    }
 
     function ProcessGameState(gameState) {
         globalGameState = gameState;

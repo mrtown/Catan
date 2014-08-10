@@ -86,6 +86,9 @@ namespace Server
                 case Message.PLAYER_CANCEL:
                     ProcessPlayerCancel(parsedMessage[1], parsedMessage[2]);
                     break;
+                case Message.PING:
+                    ProcessPing(parsedMessage[1], parsedMessage[2], parsedMessage[3]);
+                    break;
                 case Message.PLAYER_TRADE:
                     lock (_lock)
                     {
@@ -104,6 +107,15 @@ namespace Server
                         
             }
             
+        }
+
+        private static void ProcessPing(string gameID, string playerID, string pingID)
+        {
+            Game game = Server.GetGameByID(gameID);
+            if (game == null)
+                return;
+
+            game.ProcessReceivedPing(playerID, pingID);
         }
 
         private static void ProcessPlayerCancel(string gameID, string playerID)
@@ -299,7 +311,7 @@ namespace Server
             }    
         }
 
-        private static void AsyncProcess(object details)
+        public static void AsyncProcess(object details)
         {
             KeyValuePair<User, string> data = (KeyValuePair<User, string>)details;
             data.Key.Context.Send(data.Value);            
@@ -414,7 +426,10 @@ namespace Server
             {
                 string json = _serializer.Serialize(msg);
                 user.Context.Send(json);
-            }                
+            }
+
+            //newGame.StartPinging();
+            //newGame.StartSendingPingStatuses();
         }
 
         private static void ProcessChatMessage(string userID, string message)
@@ -498,6 +513,8 @@ namespace Server
         TRADE_CONFIRM = 17,
         PLAYER_SELECT_RESOURCE_FOR_MONOPOLY = 18,
         PLAYER_SELECT_PLAYER = 19,
-        PLAYER_CANCEL = 20
+        PLAYER_CANCEL = 20,
+        PING = 21,
+        PING_STATUSES = 22
     }
 }
