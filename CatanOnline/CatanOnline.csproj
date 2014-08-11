@@ -65,6 +65,7 @@
     <Content Include="Image\redRoad1.png" />
     <Content Include="Image\redRoad2.png" />
     <Content Include="Image\redRoad3.png" />
+    <Content Include="Image\selectedScroll.png" />
     <Content Include="Image\water.jpg" />
     <Content Include="Image\wheatTile.png" />
     <Content Include="Image\woodTile.png" />
