@@ -667,6 +667,12 @@
         var monopolyCount = 0;
         var victoryPointCount = 0;
 
+        var knightCountUnplayable = 0;
+        var yearOfPlentyCountUnplayable = 0;
+        var roadBuildingCountUnplayable = 0;
+        var monopolyCountUnplayable = 0;
+        var victoryPointCountUnplayable = 0;
+
         var player;
         for (var i = 0; i < globalGameState.Players.length; i++) {
             if (globalGameState.Players[i].ID == localID) {
@@ -693,13 +699,30 @@
                     victoryPointCount++;
                 }
             }
+            else {
+                if (player.HeldCards[i].TypeString == "knight") {
+                    knightCountUnplayable++;
+                }
+                else if (player.HeldCards[i].TypeString == "yearOfPlenty") {
+                    yearOfPlentyCountUnplayable++;
+                }
+                else if (player.HeldCards[i].TypeString == "roadBuilding") {
+                    roadBuildingCountUnplayable++;
+                }
+                else if (player.HeldCards[i].TypeString == "monopoly") {
+                    monopolyCountUnplayable++;
+                }
+                else if (player.HeldCards[i].TypeString == "victoryPoint") {
+                    victoryPointCountUnplayable++;
+                }
+            }
         }
 
-        document.getElementById('cardCountKnight').innerHTML = 'Knight (x ' + knightCount + ')';
-        document.getElementById('cardCountYearOfPlenty').innerHTML = 'Year of Plenty (x ' + yearOfPlentyCount + ')';
-        document.getElementById('cardCountRoadBuilding').innerHTML = 'Road Building (x ' + roadBuildingCount + ')';
-        document.getElementById('cardCountMonopoly').innerHTML = 'Monopoly (x ' + monopolyCount + ')';
-        document.getElementById('cardCountVictoryPoint').innerHTML = 'Victory Point (x ' + victoryPointCount + ')';
+        document.getElementById('cardCountKnight').innerHTML = 'Knight (' + knightCount + ' + ' + knightCountUnplayable + ')';
+        document.getElementById('cardCountYearOfPlenty').innerHTML = 'Year of Plenty (' + yearOfPlentyCount + ' + ' + yearOfPlentyCountUnplayable + ')';
+        document.getElementById('cardCountRoadBuilding').innerHTML = 'Road Building (' + roadBuildingCount + ' + ' + roadBuildingCountUnplayable + ')';
+        document.getElementById('cardCountMonopoly').innerHTML = 'Monopoly (' + monopolyCount + ' + ' + monopolyCountUnplayable + ')';
+        document.getElementById('cardCountVictoryPoint').innerHTML = 'Victory Point (' + victoryPointCount + ' + ' + victoryPointCountUnplayable + ')';
 
     }
 
