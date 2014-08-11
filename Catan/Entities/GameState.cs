@@ -73,11 +73,11 @@ namespace Catan.Entities
                 if (currentPlayer == 1)
                     currentColor = "green";
                 else if (currentPlayer == 2)
-                    currentColor = "yellow";
+                    currentColor = "red";
                 else if (currentPlayer == 3)
                     currentColor = "blue";
                 else if (currentPlayer == 4)
-                    currentColor = "red";
+                    currentColor = "yellow";
 
                 Player newPlayer = new Player(user.Key, user.Value, currentColor, currentPlayer, BuildTradeRecipientList(user, users));
                 players.Add(newPlayer);
