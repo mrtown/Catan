@@ -651,8 +651,18 @@
         }
     }
 
+    function recipientListSelectionChanged() {
+        var recipientList = document.getElementById('recipientList');
+        document.cookie = 'selectedRecipient=' + recipientList.selectedIndex;
+    }
+
+    // delete cookie
+    document.cookie = "selectedRecipient=; expires=Thu, 01 Jan 1970 00:00:00 GMT";  
     function PopulateTradeRecipientList() {
         var recipientList = document.getElementById('recipientList');
+
+        recipientList.addEventListener('change', recipientListSelectionChanged);
+
         var player = GetPlayer(localID);
         
         recipientList.options.length = 0;
@@ -664,6 +674,15 @@
             recipientList.add(o, null);
         }
 
+        // apply state
+        var state = document.cookie;
+        if (state != '')
+        {
+            var keyValuePairs = state.split('=');
+            var selectedRecipientIndex = keyValuePairs[1];
+            recipientList.selectedIndex = selectedRecipientIndex;
+        }
+        
     }
 
     function RenderCardCount() {
