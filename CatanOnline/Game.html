@@ -57,7 +57,20 @@
                 </td>
                 <td>
 
-                    <table>
+                    <table style="padding-bottom:20px;">
+                        <tr>
+                            <td colspan="7"><h3>CHAT</h3></td>
+                        </tr>
+                        <tr>
+                            <td colspan="9"><textarea id="txtChat" style="height:150px;width:272px;"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">
+                                <input type="text" id="txtMessage" style="height:15px;width:190px;"></input>
+                                <input type="button" id="Button1" value="Send" style="height:20px;width:75px;" onclick="SendMessage();"/>
+                            </td>
+
+                        </tr>
                         <tr>
                             <td colspan="7"><h3>TRADE</h3></td>
                         </tr>
@@ -97,13 +110,14 @@
                                 <td style="padding-left:25px;"><div id="takeWheat">0</div></td>
                         </tr>
                         <tr>
-                            <td colspan="3"><br />
+                            <td colspan="3" style="padding-left:10px;"><br />
                                 <select id="recipientList">
 
                                 </select>                   
                             </td>
                            <td colspan="9" style="vertical-align:bottom;">
                                 <input type="button" value="Trade" onclick="Trade()" />
+                               <input type="button" value="Reset" onclick="Reset()" />
                             </td>
                         </tr>
 
@@ -112,9 +126,9 @@
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <input type="radio" id="buildRoad" name="build" value="Road"/>Road<br /><br />
-                                <input type="radio" id="buildSettlement" name="build" value="Settlement"/>Settlement<br /><br />
-                                <input type="radio" id="buildCity" name="build" value="City"/>City<br /><br />                          
+                                <input type="radio" id="buildRoad" name="build" value="Road"/>Road<br />
+                                <input type="radio" id="buildSettlement" name="build" value="Settlement"/>Settlement<br />
+                                <input type="radio" id="buildCity" name="build" value="City"/>City<br />              
                                 <input type="radio" id="buildDevelopmentCard" name="build" value="City"/>Development Card
                             </td>
                             <td colspan="9" style="vertical-align:bottom;">
@@ -127,35 +141,32 @@
                             <td colspan="20"><h3>PLAY CARD</h3></td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="9">
                                 <table>
                                     <tr>
                                         <td><input type="radio" id="playKnight" name="play" value="Road"/></td><td><div id="cardCountKnight"></div></td>                                        
-                                    </tr><tr><td><br /></td></tr>
+                                    </tr><tr><td></td></tr>
                                     <tr>
                                         <td><input type="radio" id="playYearOfPlenty" name="play" value="Settlement"/></td><td><div id="cardCountYearOfPlenty"></div></td>                                    
-                                    </tr><tr><td><br /></td></tr>
+                                    </tr><tr><td></td></tr>
                                     <tr>
                                         <td><input type="radio" id="playRoadBuilding" name="play" value="City"/></td><td><div id="cardCountRoadBuilding"></div> </td>                                    
-                                    </tr><tr><td><br /></td></tr>
+                                    </tr><tr><td></td></tr>
                                     <tr>
                                         <td><input type="radio" id="playMonopoly" name="play" value="City"/></td><td><div id="cardCountMonopoly"></div></td>                                    
-                                    </tr><tr><td><br /></td></tr>
+                                    </tr><tr><td></td></tr>
                                     <tr>
-                                        <td><input type="radio" id="playVictoryPoint" name="play" value="City" disabled="true"/></td><td><div id="cardCountVictoryPoint"></div></td>                                    
+                                        <td><input type="radio" id="playVictoryPoint" name="play" value="City" disabled="true"/></td>
+                                        <td><div id="cardCountVictoryPoint"></div></td>   
+                                        <td style="padding-left:74px;"><input type="button" value="Play" onclick="PlayCard()" /></td>   
                                     </tr><tr><td><br /></td></tr>
                                 </table>                                                                                                                                                                                                                                                                               
-                            </td>
-                            <td colspan="9" style="vertical-align:top;">
-                                <input type="button" value="Play" onclick="PlayCard()" />
                             </td>
                         </tr>
 
                         <tr>
-                            <td><br />
+                            <td colspan="9">
                                 <input type="button" value="Roll" style="font-size:15px;" onclick="Roll()" />                                                        
-                            </td>
-                            <td style="padding-left:75px;" colspan="5"><br />
                                 <input type="button" value="Pass" style="font-size:15px;" onclick="Pass()" />
                             </td>
                         </tr>
@@ -169,7 +180,7 @@
                             <td>
                                 <input id="TradeConfirmDetailsAccept"type="button" value="Accept" style="visibility:hidden;" onclick="ConfirmTrade('yes')" />
                             </td>
-                            <td colspan="5" style="padding-left:75px;">
+                            <td colspan="5" >
                                 <input id="TradeConfirmDetailsDeny" type="button" value="Deny" style="visibility:hidden;" onclick="ConfirmTrade('no')"/>
                             </td>
                         </tr>
@@ -472,6 +483,13 @@
     
             document.getElementById('ping').innerHTML = pingDisplay;
         }
+        else if (value.Control == 'GAME_CHAT_MESSAGE') {
+            var chatWindow = document.getElementById('txtChat');
+            chatWindow.innerHTML = chatWindow.innerHTML + '\n' + value.Payload;
+
+
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
 
     }
 
@@ -629,6 +647,22 @@
         return take - give;
     }
 
+    function Reset() {
+
+        document.getElementById('give' + 'Brick').innerHTML = '0';
+        document.getElementById('give' + 'Ore').innerHTML = '0';
+        document.getElementById('give' + 'Wheat').innerHTML = '0';
+        document.getElementById('give' + 'Wood').innerHTML = '0';
+        document.getElementById('give' + 'Wool').innerHTML = '0';
+
+        document.getElementById('take' + 'Brick').innerHTML = '0';
+        document.getElementById('take' + 'Ore').innerHTML = '0';
+        document.getElementById('take' + 'Wheat').innerHTML = '0';
+        document.getElementById('take' + 'Wood').innerHTML = '0';
+        document.getElementById('take' + 'Wool').innerHTML = '0';
+    }
+
+    
     function Trade() {
         var recipientList = document.getElementById('recipientList');
         var recipientID = recipientList.options[recipientList.selectedIndex].value;
@@ -898,6 +932,14 @@
                 ws.send('PLAYER_PLAY_CARD' + ':' + gameID + ':' + localID + ":" + type);
             }
         }
+    }
+
+    function SendMessage() {
+        var msg = document.getElementById('txtMessage');
+        ws.send('GAME_CHAT_MESSAGE' + ':' + gameID + ':' + localID + ':' + msg.value);
+        msg.value = '';
+
+
     }
 
     function Pass() {

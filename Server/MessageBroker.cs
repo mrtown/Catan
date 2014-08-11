@@ -89,6 +89,9 @@ namespace Server
                 case Message.PING:
                     ProcessPing(parsedMessage[1], parsedMessage[2], parsedMessage[3]);
                     break;
+                case Message.GAME_CHAT_MESSAGE:
+                    ProcessGameChatMessage(parsedMessage[1], parsedMessage[2], parsedMessage[3]);
+                    break;
                 case Message.PLAYER_TRADE:
                     lock (_lock)
                     {
@@ -107,6 +110,29 @@ namespace Server
                         
             }
             
+        }
+
+        private static void ProcessGameChatMessage(string gameID, string playerID, string message)
+        {
+            Game game = Server.GetGameByID(gameID);
+            if (game == null)
+                return;
+
+            User user = game.Users.Where(u => u.ID == playerID).First();
+
+            ProtocolMessage msg = new ProtocolMessage(Message.GAME_CHAT_MESSAGE.ToString(), user.Name + ": " + message);
+            GeneralMulticast(msg, game.Users);
+        }
+
+        private static void GeneralMulticast(ProtocolMessage msg, List<User> users)
+        {
+            string json = _serializer.Serialize(msg);
+            foreach (User gameUser in users)
+            {
+                Thread t = new Thread(new ParameterizedThreadStart(AsyncProcess));
+                KeyValuePair<User, string> details = new KeyValuePair<User, string>(gameUser, json);
+                t.Start(details);
+            }            
         }
 
         private static void ProcessPing(string gameID, string playerID, string pingID)
@@ -515,6 +541,7 @@ namespace Server
         PLAYER_SELECT_PLAYER = 19,
         PLAYER_CANCEL = 20,
         PING = 21,
-        PING_STATUSES = 22
+        PING_STATUSES = 22,
+        GAME_CHAT_MESSAGE = 23
     }
 }

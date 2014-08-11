@@ -49,11 +49,11 @@ namespace Catan.Entities
             _color = color;
             _playerNumber = playerNumber;
 
-            _wood = 0;
-            _wool = 0;
-            _wheat = 0;
-            _brick = 0;
-            _ore = 0;
+            _wood = 100;
+            _wool = 100;
+            _wheat = 100;
+            _brick = 100;
+            _ore = 100;
 
             _score = 0;
             _longestRoadLength = 0;
