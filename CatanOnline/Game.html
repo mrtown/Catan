@@ -62,11 +62,11 @@
                             <td colspan="7"><h3>CHAT</h3></td>
                         </tr>
                         <tr>
-                            <td colspan="9"><textarea id="txtChat" style="height:150px;width:272px;"></textarea></td>
+                            <td colspan="9"><textarea id="txtChat" style="height:150px;width:272px;" readonly="true"></textarea></td>
                         </tr>
                         <tr>
                             <td colspan="9">
-                                <input type="text" id="txtMessage" style="height:15px;width:190px;"></input>
+                                <input type="text" id="txtMessage" style="height:15px;width:190px;" maxlength="70" onkeypress="HandleChatKeyPress(event)"/>
                                 <input type="button" id="Button1" value="Send" style="height:20px;width:75px;" onclick="SendMessage();"/>
                             </td>
 
@@ -894,6 +894,14 @@
         }
     }
 
+    function HandleChatKeyPress(e) {
+        if (e.keyCode == 13) {
+            SendMessage();
+        }
+
+        return false;
+    }
+
     function Roll() {
         if (globalGameState.State.StateTypeString == 'PLAYER_TURN') {
             if (globalGameState.State.PlayerID == localID) {                
@@ -936,8 +944,10 @@
 
     function SendMessage() {
         var msg = document.getElementById('txtMessage');
-        ws.send('GAME_CHAT_MESSAGE' + ':' + gameID + ':' + localID + ':' + msg.value);
-        msg.value = '';
+        if (msg.value.length > 0) {
+            ws.send('GAME_CHAT_MESSAGE' + ':' + gameID + ':' + localID + ':' + msg.value);
+            msg.value = '';
+        }
 
 
     }
