@@ -15,7 +15,7 @@ namespace Catan.Entities.States
         private static Random _randomGenerator = new Random(DateTime.Now.Millisecond);
 
         public PlayerTurn(string playerID, Board board)
-            : base(board, Entities.StateType.PLAYER_TURN)
+            : base(board, Entities.StateType.PLAYER_TURN, playerID)
         {
             _playerID = playerID;
             _hasAlreadyRolled = false;

@@ -13,7 +13,7 @@ namespace Catan.Entities.States
         private bool _placeAnywhere;
 
         public PlayerSelectRoad(string playerID, Board board, bool placeAnywhere, bool cameFromDevelopmentCard)
-            : base(board, Entities.StateType.PLAYER_SELECT_ROAD)
+            : base(board, Entities.StateType.PLAYER_SELECT_ROAD, playerID)
         {            
             _playerID = playerID;
             _currentText = board.GetPlayerByID(playerID).Name + ", is building a road.";

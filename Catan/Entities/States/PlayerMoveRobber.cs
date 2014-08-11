@@ -11,7 +11,7 @@ namespace Catan.Entities.States
         private string _playerID;
 
         public PlayerMoveRobber(string playerID, Board board)
-            : base(board, StateType.PLAYER_MOVE_ROBBER)
+            : base(board, StateType.PLAYER_MOVE_ROBBER, playerID)
         {
             _playerID = playerID;
             _currentText = board.GetPlayerByID(playerID).Name + ", is moving the Robber.";

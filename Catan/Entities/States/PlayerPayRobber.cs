@@ -12,7 +12,7 @@ namespace Catan.Entities.States
         private int _amountToPay;
 
         public PlayerPayRobber(string playerID, Board board)
-            : base(board, StateType.PLAYER_PAY_ROBBER)
+            : base(board, StateType.PLAYER_PAY_ROBBER, playerID)
         {
             _player = board.GetPlayerByID(playerID);
             _amountToPay = CalculateAmountToPay();

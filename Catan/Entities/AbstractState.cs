@@ -13,6 +13,12 @@ namespace Catan.Entities
         protected AbstractState _nextState;
         protected string _currentText;
         protected string _historyText;
+        public string _currentPlayerID;
+
+        public string CurrentPlayerID
+        {
+            get { return _currentPlayerID; }
+        }
 
         //public abstract AbstractState ProcessInput(Dictionary<string, string> data);
 
@@ -30,12 +36,14 @@ namespace Catan.Entities
         }
 
 
-        protected AbstractState(Board board, StateType stateType)
+        protected AbstractState(Board board, StateType stateType, string currentPlayerID)
         {
             _stateType = stateType;
             _board = board;
             _nextState = null;
             _historyText = string.Empty;
+            _currentPlayerID = currentPlayerID;
+
         }
 
         public AbstractState NextState

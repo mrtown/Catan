@@ -14,7 +14,7 @@ namespace Catan.Entities.States
 
 
         public PlayerSelectSettlement(string playerID, Board board, bool placeAnywhere, bool giveResources)
-            : base(board, Entities.StateType.PLAYER_SELECT_SETTLEMENT)
+            : base(board, Entities.StateType.PLAYER_SELECT_SETTLEMENT, playerID)
         {
             _playerID = playerID;
             _placeAnywhere = placeAnywhere;

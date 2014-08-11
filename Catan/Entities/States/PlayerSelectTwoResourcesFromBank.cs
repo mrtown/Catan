@@ -11,7 +11,7 @@ namespace Catan.Entities.States
         private Player _player;
 
         public PlayerSelectTwoResourcesFromBank(string playerID, Board board)
-            : base(board, Entities.StateType.PLAYER_SELECT_TWO_RESOURCES_FROM_BANK)
+            : base(board, Entities.StateType.PLAYER_SELECT_TWO_RESOURCES_FROM_BANK, playerID)
         {
             _player = board.GetPlayerByID(playerID);
 

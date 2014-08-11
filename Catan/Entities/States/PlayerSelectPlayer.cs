@@ -13,7 +13,7 @@ namespace Catan.Entities.States
         private string _playerID;
         List<Settlement> _settlements;
         public PlayerSelectPlayer(string playerID, Board board, List<Settlement> settlements)
-            : base(board, StateType.PLAYER_SELECT_PLAYER)
+            : base(board, StateType.PLAYER_SELECT_PLAYER, playerID)
         {
             _playerID = playerID;
             _settlements = settlements;

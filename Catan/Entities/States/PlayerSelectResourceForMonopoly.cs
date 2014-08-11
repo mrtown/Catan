@@ -10,7 +10,7 @@ namespace Catan.Entities.States
     {
         private Player _player;
         public PlayerSelectResourceForMonopoly(string playerID, Board board)
-            : base(board, Entities.StateType.PLAYER_SELECT_RESOURCE_FOR_MONOPOLY)
+            : base(board, Entities.StateType.PLAYER_SELECT_RESOURCE_FOR_MONOPOLY, playerID)
         {
             _player = board.GetPlayerByID(playerID);
 

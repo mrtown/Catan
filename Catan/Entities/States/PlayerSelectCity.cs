@@ -11,7 +11,7 @@ namespace Catan.Entities.States
         private string _playerID;
 
         public PlayerSelectCity(string playerID, Board board)
-            : base(board, Entities.StateType.PLAYER_SELECT_CITY)
+            : base(board, Entities.StateType.PLAYER_SELECT_CITY, playerID)
         {
             _playerID = playerID;
             _currentText = board.GetPlayerByID(playerID).Name + ", is building a city.";

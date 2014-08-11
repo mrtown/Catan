@@ -199,7 +199,7 @@
     var globalGameState = null;
     var state = null;
 
-    var totalNumberOfImages = 47;
+    var totalNumberOfImages = 48;
     var numberOfLoadedImages = 0;
     var imagePaths;
     var imageCache = new Object();
@@ -269,6 +269,7 @@
         imagePaths[44] = '/Image/longestRoad.png';
         imagePaths[45] = '/Image/largestArmy.png';
         imagePaths[46] = '/Image/scroll.png';
+        imagePaths[47] = '/Image/selectedScroll.png';
 
         for (var i = 0; i < imagePaths.length; i++) {
             var img = new Image();
@@ -561,7 +562,12 @@
 
     function DrawPlayerDetails(player, xOffset, yOffset) {
 
-        DrawImage(imageCache['/Image/scroll.png'], 1 + xOffset, 5 + yOffset);
+        var scrollImagePath = '/Image/scroll.png';
+        if (globalGameState.State.CurrentPlayerID == player.ID) {
+            scrollImagePath = '/Image/selectedScroll.png';
+        }
+
+        DrawImage(imageCache[scrollImagePath], 1 + xOffset, 5 + yOffset);
 
         DrawText(player.Name, player.Color, 15 + xOffset, 40 + yOffset);
         DrawText('Resources: ' + player.TotalNumberOfResources, player.Color, 15 + xOffset, 70 + yOffset);

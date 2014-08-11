@@ -20,7 +20,7 @@ namespace Catan.Entities.States
         private bool _recipientHasEnoughResources;
 
         public TradeConfirm(string playerID, string recipientID, Board board, int brickAmount, int oreAmount, int wheatAmount, int woodAmount, int woolAmount, bool recipientHasEnoughResources)
-            : base(board, Entities.StateType.TRADE_CONFIRM)
+            : base(board, Entities.StateType.TRADE_CONFIRM, playerID)
         {
             _player = board.GetPlayerByID(playerID);
             _playerRecipient = board.GetPlayerByID(recipientID);
