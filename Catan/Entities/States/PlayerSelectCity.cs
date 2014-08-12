@@ -96,6 +96,7 @@ namespace Catan.Entities.States
                 settlement.UpgradeToCity(player);
 
                 _nextState.HistoryText = player.Name + " built a city.";
+                _nextState.Audio = Guid.NewGuid().ToString() + ":HRESCUE.wav";
             }
             catch (Exception e)
             {

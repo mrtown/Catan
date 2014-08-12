@@ -201,6 +201,7 @@ namespace Catan.Entities.States
                 _board.Roads.Add(newRoad);
 
                 _nextState.HistoryText = player.Name + " built a road.";
+                _nextState.Audio = Guid.NewGuid().ToString() + ":MINE.wav";
             }
             catch (Exception e)
             {

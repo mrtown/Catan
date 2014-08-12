@@ -167,6 +167,7 @@ namespace Catan.Entities.States
                     GiveResources(settlementID);
             
                 _nextState.HistoryText = player.Name + " built a settlement.";
+                _nextState.Audio = Guid.NewGuid().ToString() + ":CONSTRCT.wav";
             }
             catch (Exception e)
             {

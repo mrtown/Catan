@@ -13,7 +13,14 @@ namespace Catan.Entities
         protected AbstractState _nextState;
         protected string _currentText;
         protected string _historyText;
-        public string _currentPlayerID;
+        protected string _currentPlayerID;
+        protected string _audio;
+
+        public string Audio
+        {
+            get { return _audio; }
+            set { _audio = value; }
+        }
 
         protected List<MapObject> _overlayDetails;
 
@@ -52,6 +59,7 @@ namespace Catan.Entities
             _historyText = string.Empty;
             _currentPlayerID = currentPlayerID;
             _overlayDetails = new List<MapObject>();
+            _audio = null;
 
         }
 

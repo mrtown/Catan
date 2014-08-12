@@ -222,10 +222,7 @@
             </table>
         </div>
     
-    <audio id="music">
-      <source src="/Audio/catan.mp3" type="audio/wav">
-        Your browser does not support the audio element.
-    </audio>
+
 
     </body>
 
@@ -245,18 +242,33 @@
     var numberOfLoadedImages = 0;
     var imagePaths;
     var imageCache = new Object();
-
+    var audioBlacklist = new Array();
     //////////////////
-    var aud = new Audio('/Audio/catan.mp3');
+    //var aud = new Audio('/Audio/catan.mp3');
 
-    aud.addEventListener('ended', function () {
-     //   aud.play();
-    }, false);
+    //aud.addEventListener('ended', function () {
+    // //   aud.play();
+    //}, false);
 
-    aud.addEventListener('loadeddata', function () {
-      //  aud.play();
-    }, false);
+    //aud.addEventListener('loadeddata', function () {
+    //  //  aud.play();
+    //}, false);
     /////////////////////
+    
+
+    function PlayAudio(audioFileName) {
+
+        var values = audioFileName.split(':');
+
+        if (audioBlacklist.indexOf(values[0]) < 0) {
+            var aud = new Audio('/audio/' + values[1]);
+            aud.addEventListener('loadeddata', function () {
+                aud.play();
+            }, false);
+            audioBlacklist.push(values[0]);
+        }
+
+    }
 
     PreloadImages();
 
@@ -554,12 +566,18 @@
         UpdateHistogram(gameState.DiceRollFrequencies);
         PopulateTradeRecipientList();
 
+        PlayAvailableAudio();
+
         CheckForTradeConfirm();
 
         CheckForWinner(gameState);
     }
 
-
+    function PlayAvailableAudio() {
+        if (globalGameState.State.Audio != '' && globalGameState.State.Audio != undefined) {
+            PlayAudio(globalGameState.State.Audio);
+        }
+    }
 
     function CheckForWinner(gameState) {
         if (gameState.Winner != null) {
