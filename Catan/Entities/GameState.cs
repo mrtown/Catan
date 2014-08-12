@@ -265,7 +265,11 @@ namespace Catan.Entities
         public AbstractState State
         {
             get { return _state; }
-            set { _state = value; }
+            set {
+                    if (value.StateType == StateType.PLAYER_SELECT_SETTLEMENT)
+                        ((PlayerSelectSettlement)value).BuildOverlay();
+                    _state = value; 
+                }
         }
 
         public Board Board

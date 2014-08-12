@@ -52,6 +52,7 @@
     <Compile Include="Entities\GameState.cs" />
     <Compile Include="Entities\LongestRoadTraceState.cs" />
     <Compile Include="Entities\MapObject.cs" />
+    <Compile Include="Entities\OverlayDetail.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Port.cs" />
     <Compile Include="Entities\Road.cs" />

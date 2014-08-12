@@ -15,6 +15,14 @@ namespace Catan.Entities
         protected string _historyText;
         public string _currentPlayerID;
 
+        protected List<MapObject> _overlayDetails;
+
+        public List<MapObject> OverlayDetails
+        {
+            get { return _overlayDetails; }
+            set { _overlayDetails = value; }
+        }
+
         public string CurrentPlayerID
         {
             get { return _currentPlayerID; }
@@ -43,6 +51,7 @@ namespace Catan.Entities
             _nextState = null;
             _historyText = string.Empty;
             _currentPlayerID = currentPlayerID;
+            _overlayDetails = new List<MapObject>();
 
         }
 

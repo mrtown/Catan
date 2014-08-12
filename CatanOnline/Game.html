@@ -210,7 +210,7 @@
     var globalGameState = null;
     var state = null;
 
-    var totalNumberOfImages = 48;
+    var totalNumberOfImages = 49;
     var numberOfLoadedImages = 0;
     var imagePaths;
     var imageCache = new Object();
@@ -281,6 +281,7 @@
         imagePaths[45] = '/Image/largestArmy.png';
         imagePaths[46] = '/Image/scroll.png';
         imagePaths[47] = '/Image/selectedScroll.png';
+        imagePaths[48] = '/Image/settlementOverlay.png';
 
         for (var i = 0; i < imagePaths.length; i++) {
             var img = new Image();
@@ -514,6 +515,7 @@
         RenderCardCount();
         RenderPlayerDetails();
         RenderDiceRoll(gameState);
+        RenderOverlay(gameState.State.OverlayDetails);
         PopulateTradeRecipientList();
 
         CheckForTradeConfirm();
@@ -802,6 +804,15 @@
 
     function GetImage(path) {
         
+    }
+
+    function RenderOverlay(overlayDetails) {
+
+        if (overlayDetails.length > 0) {
+            for (var i = 0; i < overlayDetails.length; i++) {
+                ctx.drawImage(imageCache['/Image/' + overlayDetails[i].Image], overlayDetails[i].DrawCoordinate.X - 30 , overlayDetails[i].DrawCoordinate.Y - 28);
+            }
+        }
     }
 
     function RenderBoard(board) {

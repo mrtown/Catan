@@ -21,12 +21,38 @@ namespace Catan.Entities.States
             _currentText = board.GetPlayerByID(playerID).Name + ", is building a settlement.";
 
             _giveResources = giveResources;
+
+            BuildOverlay();   
+        }
+
+        public void BuildOverlay()
+        {
+            _overlayDetails.Clear();
+            for(int i=0; i<_board.SettlementCoordinates.Count; i++)
+            {
+
+                if ((_board.IsTheirAnAdjacentRoad(_playerID, (i + 1).ToString()) || _placeAnywhere) &&
+                    !_board.IsTheirAnAdjacentSettlement((i + 1).ToString()))
+                {
+
+                    List<Settlement> settlements = _board.Settlements.Where(s => s.PlayerID == _playerID && s.ID == (i + 1)).ToList();
+                    if (settlements.Count > 0)
+                        continue;
+                    OverlayDetail detail = new OverlayDetail(i, _board.SettlementCoordinates[i], "settlementOverlay.png", _playerID);
+                    _overlayDetails.Add(detail);
+
+                }                
+                
+            }
+
         }
 
         public string PlayerID
         {
             get { return _playerID; }
         }
+
+
 
         public override bool IsInputValid(Dictionary<string, string> data, out string message)
         {
@@ -106,6 +132,8 @@ namespace Catan.Entities.States
             }
         }
 
+
+
         public override AbstractState ProcessInputData(Dictionary<string, string> data)
         {
             Player player = null;
@@ -131,7 +159,7 @@ namespace Catan.Entities.States
 
                 if (_giveResources)
                     GiveResources(settlementID);
-
+            
                 _nextState.HistoryText = player.Name + " built a settlement.";
             }
             catch (Exception e)
@@ -140,7 +168,7 @@ namespace Catan.Entities.States
             }
 
             if (_nextState != null)
-            {
+            {                  
                 return _nextState;
             }
             
