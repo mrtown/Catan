@@ -34,8 +34,9 @@ namespace Catan.Entities
         private Player _playerWithLargestArmy;
         private int _rolled = 0;
         private string _message;
-
         private string _winner;
+        private List<int> _diceRollFrequencies;
+
 
         public string Winner
         {
@@ -58,7 +59,12 @@ namespace Catan.Entities
         public int Rolled
         {
             get { return _rolled; }
-            set { _rolled = value; }
+            set 
+            {
+                if (value > 1)
+                    _diceRollFrequencies[value-2] += 1;
+                _rolled = value; 
+            }
         }
 
         private List<Player> BuildPlayers(List<KeyValuePair<string, string>> users)
@@ -194,6 +200,25 @@ namespace Catan.Entities
 
             _board = new Board(this);
             _state = CreateStateFlow();
+
+            _diceRollFrequencies = BuildEmptyDiceRollFrequencies();
+        }
+
+        public List<int> DiceRollFrequencies
+        {
+            get { return _diceRollFrequencies; }
+            set { _diceRollFrequencies = value; }
+        }
+
+        public List<int> BuildEmptyDiceRollFrequencies()
+        {
+            List<int> frequencies = new List<int>();
+            for (int i = 2; i <= 12; i++)
+            {
+                frequencies.Add(0);
+            }
+
+            return frequencies;
         }
 
         public string Message
