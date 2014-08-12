@@ -57,6 +57,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Audio\catan.mp3" />
+    <Content Include="Audio\CONSTRCT.wav" />
+    <Content Include="Audio\HRESCUE.wav" />
+    <Content Include="Audio\MINE.wav" />
     <Content Include="Game.html" />
     <Content Include="Image\brickTile.png" />
     <Content Include="Image\dessertTile.png" />
