@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Catan.Entities.States;
 using Catan.Entities.DevelopmentCards;
+using Catan.Interfaces;
 
 namespace Catan.Entities
 {
@@ -266,8 +267,8 @@ namespace Catan.Entities
         {
             get { return _state; }
             set {
-                    if (value.StateType == StateType.PLAYER_SELECT_SETTLEMENT)
-                        ((PlayerSelectSettlement)value).BuildOverlay();
+                    if (value is IOverlay)
+                        ((IOverlay)value).BuildOverlay();
                     _state = value; 
                 }
         }

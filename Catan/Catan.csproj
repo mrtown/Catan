@@ -71,6 +71,7 @@
     <Compile Include="Entities\Tile.cs" />
     <Compile Include="Entities\TradeRecipient.cs" />
     <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Interfaces\IOverlay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

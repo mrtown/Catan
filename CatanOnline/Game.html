@@ -210,7 +210,7 @@
     var globalGameState = null;
     var state = null;
 
-    var totalNumberOfImages = 49;
+    var totalNumberOfImages = 52;
     var numberOfLoadedImages = 0;
     var imagePaths;
     var imageCache = new Object();
@@ -282,6 +282,10 @@
         imagePaths[46] = '/Image/scroll.png';
         imagePaths[47] = '/Image/selectedScroll.png';
         imagePaths[48] = '/Image/settlementOverlay.png';
+
+        imagePaths[49] = '/Image/roadOverlay_1.png';
+        imagePaths[50] = '/Image/roadOverlay_2.png';
+        imagePaths[51] = '/Image/roadOverlay_3.png';
 
         for (var i = 0; i < imagePaths.length; i++) {
             var img = new Image();
@@ -808,9 +812,9 @@
 
     function RenderOverlay(overlayDetails) {
 
-        if (overlayDetails.length > 0) {
+        if (overlayDetails.length > 0 && globalGameState.State.CurrentPlayerID == localID) {
             for (var i = 0; i < overlayDetails.length; i++) {
-                ctx.drawImage(imageCache['/Image/' + overlayDetails[i].Image], overlayDetails[i].DrawCoordinate.X - 30 , overlayDetails[i].DrawCoordinate.Y - 28);
+                ctx.drawImage(imageCache['/Image/' + overlayDetails[i].Image], overlayDetails[i].DrawCoordinate.X, overlayDetails[i].DrawCoordinate.Y);
             }
         }
     }

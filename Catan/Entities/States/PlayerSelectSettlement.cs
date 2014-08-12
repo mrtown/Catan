@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Catan.Interfaces;
+
 namespace Catan.Entities.States
 {
-    public class PlayerSelectSettlement : AbstractState
+    public class PlayerSelectSettlement : AbstractState, IOverlay
     {
         private string _playerID;
         private bool _placeAnywhere;
@@ -21,8 +23,7 @@ namespace Catan.Entities.States
             _currentText = board.GetPlayerByID(playerID).Name + ", is building a settlement.";
 
             _giveResources = giveResources;
-
-            BuildOverlay();   
+            BuildOverlay();
         }
 
         public void BuildOverlay()
@@ -35,10 +36,15 @@ namespace Catan.Entities.States
                     !_board.IsTheirAnAdjacentSettlement((i + 1).ToString()))
                 {
 
-                    List<Settlement> settlements = _board.Settlements.Where(s => s.PlayerID == _playerID && s.ID == (i + 1)).ToList();
+                    List<Settlement> settlements = _board.Settlements.Where(s => s.ID == (i + 1)).ToList();
                     if (settlements.Count > 0)
                         continue;
-                    OverlayDetail detail = new OverlayDetail(i, _board.SettlementCoordinates[i], "settlementOverlay.png", _playerID);
+
+                    DrawCoordinate dc = new DrawCoordinate(_board.SettlementCoordinates[i].X, _board.SettlementCoordinates[i].Y, 0);
+                    dc.X -= 30;
+                    dc.Y -= 28;
+
+                    OverlayDetail detail = new OverlayDetail(i, dc, "settlementOverlay.png", _playerID);
                     _overlayDetails.Add(detail);
 
                 }                

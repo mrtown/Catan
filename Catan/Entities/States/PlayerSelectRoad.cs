@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Catan.Interfaces;
+
 namespace Catan.Entities.States
 {
-    public class PlayerSelectRoad : AbstractState
+    public class PlayerSelectRoad : AbstractState, IOverlay
     {
         private string _playerID;
         private bool _cameFromDevelomentCard;
@@ -19,9 +21,12 @@ namespace Catan.Entities.States
             _currentText = board.GetPlayerByID(playerID).Name + ", is building a road.";
             _cameFromDevelomentCard = cameFromDevelopmentCard;
             _placeAnywhere = placeAnywhere;
+            //BuildOverlay();
         }
 
 
+
+            
 
         public string PlayerID
         {
@@ -108,6 +113,50 @@ namespace Catan.Entities.States
                 return this;
             }
 
+
+        }
+
+        public void BuildOverlay()
+        {
+            string roadImageIndex = "";
+            _overlayDetails.Clear();
+            for (int i = 0; i < _board.RoadCoordinates.Count; i++)
+            {
+
+                if ((_board.IsTheirAnAdjacentSettlementOrRoad(_playerID, (i + 1).ToString())) &&
+                     (IsRoadNextToMostRecentSettlement((i + 1).ToString()) || _placeAnywhere))
+                {
+
+                    List<Road> roads = _board.Roads.Where(r => r.ID == (i + 1)).ToList();
+                    if (roads.Count > 0)
+                        continue;
+
+                    DrawCoordinate drawCoordinate = new DrawCoordinate(_board.RoadCoordinates[i].X, _board.RoadCoordinates[i].Y, 0);
+                    if (Board.Image1RoadIndexes.Contains(i + 1))
+                    {
+                        roadImageIndex = "_1";
+                        drawCoordinate.X -= 29;
+                        drawCoordinate.Y -= 7;
+                    }
+                    else if (Board.Image2RoadIndexes.Contains(i + 1))
+                    {
+                        roadImageIndex = "_2";
+                        drawCoordinate.X -= 20;
+                        drawCoordinate.Y -= 26;
+                    }
+                    else if (Board.Image3RoadIndexes.Contains(i + 1))
+                    {
+                        roadImageIndex = "_3";
+                        drawCoordinate.X -= 20;
+                        drawCoordinate.Y -= 26;
+                    }
+
+                    OverlayDetail detail = new OverlayDetail(i, drawCoordinate, "roadOverlay" + roadImageIndex + ".png", _playerID);
+                    _overlayDetails.Add(detail);
+
+                }
+
+            }
 
         }
 
