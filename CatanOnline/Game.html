@@ -11,7 +11,10 @@
       color: white;
     }
 
-
+    .detailText {
+        font-size:16px;
+        font-family:Arial;
+    }
 
     .niceButton {
 	    -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -82,31 +85,31 @@
                     <img src="Image/woodResource.png" onclick="ResourceClick('wood')"/>
                 </td>
                 <td>
-                    <div id="woodCounter">2</div>
+                    <div id="woodCounter" style="font-family:Arial;">2</div>
                 </td>
                 <td>
                     <img src="Image/woolResource.png" onclick="ResourceClick('wool')"/>
                 </td>
                 <td>
-                    <div id="woolCounter">3</div>
+                    <div id="woolCounter" style="font-family:Arial;">3</div>
                 </td>
                 <td>
                     <img src="Image/brickResource.png" onclick="ResourceClick('brick')"/>
                 </td>
                 <td>
-                    <div id="brickCounter">5</div>
+                    <div id="brickCounter" style="font-family:Arial;">5</div>
                 </td>
                 <td>
                     <img src="Image/oreResource.png" onclick="ResourceClick('ore')"/>
                 </td>
                 <td>
-                    <div id="oreCounter">2</div>
+                    <div id="oreCounter" style="font-family:Arial;">2</div>
                 </td>
                 <td>
                     <img src="Image/wheatResource.png" onclick="ResourceClick('wheat')"/>
                 </td>
                 <td>
-                    <div id="wheatCounter">1</div>
+                    <div id="wheatCounter" style="font-family:Arial;">1</div>
                 </td>
                 <td style="padding-left:580px;">
                     <img src="/Image/dice2.png" id="imageRolled" style="visibility:hidden;" />
@@ -116,7 +119,7 @@
                 </td>
             </tr>
         </table>
-        <div id="divOutputWindow" style="border-style:groove; font-size:25px; width:1190px; background-color:beige;">Loading...</div>
+        <div id="divOutputWindow" style="border-style:groove; font-size:25px; width:1190px; background-color:beige; font-family:Arial;">Loading...</div>
         <table>              
             <tr>
                 <td rowspan="4" colspan="6" style="vertical-align:top;">
@@ -130,11 +133,11 @@
                             <td colspan="7" ><h3>TRADE</h3></td>
                         </tr>
                         <tr>    
-                                <td style="padding-left:25px;"><div id="giveWood">0</div></td>
-                                <td style="padding-left:25px;"><div id="giveWool">0</div></td>
-                                <td style="padding-left:25px;"><div id="giveBrick">0</div></td>
-                                <td style="padding-left:25px;"><div id="giveOre">0</div></td>
-                                <td style="padding-left:25px;"><div id="giveWheat">0</div></td>
+                                <td style="padding-left:25px;"><div id="giveWood" class="detailText">0</div></td>
+                                <td style="padding-left:25px;"><div id="giveWool" class="detailText">0</div></td>
+                                <td style="padding-left:25px;"><div id="giveBrick" class="detailText">0</div></td>
+                                <td style="padding-left:25px;"><div id="giveOre" class="detailText">0</div></td>
+                                <td style="padding-left:25px;"><div id="giveWheat" class="detailText">0</div></td>
                         </tr>
                         <tr>    
                                 <td style="padding-left:8px;"><input type="button" value="Give"  onclick="Give('giveWood','takeWood')" /></td>
@@ -158,11 +161,11 @@
                                 <td style="padding-left:8px;"><input type="button" value="Take" onclick="Take('giveWheat', 'takeWheat')"/></td>
                         </tr>
                         <tr>    
-                                <td style="padding-left:25px;"><div id="takeWood">0</div></td>
-                                <td style="padding-left:25px;"><div id="takeWool">0</div></td>
-                                <td style="padding-left:25px;"><div id="takeBrick">0</div></td>
-                                <td style="padding-left:25px;"><div id="takeOre">0</div></td>
-                                <td style="padding-left:25px;"><div id="takeWheat">0</div></td>
+                                <td style="padding-left:25px;"><div id="takeWood" class="detailText">0</div></td>
+                                <td style="padding-left:25px;"><div id="takeWool" class="detailText">0</div></td>
+                                <td style="padding-left:25px;"><div id="takeBrick" class="detailText">0</div></td>
+                                <td style="padding-left:25px;"><div id="takeOre" class="detailText">0</div></td>
+                                <td style="padding-left:25px;"><div id="takeWheat" class="detailText">0</div></td>
                         </tr>
                         <tr>
                             <td colspan="2" style="padding-left:10px;"><br />
@@ -181,10 +184,10 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input type="radio" id="buildRoad" name="build" value="Road" class="biggerRadioButton"/>Road<br />
-                                <input type="radio" id="buildSettlement" name="build" value="Settlement" class="biggerRadioButton"/>Settlement<br />
-                                <input type="radio" id="buildCity" name="build" value="City" class="biggerRadioButton"/>City<br />              
-                                <input type="radio" id="buildDevelopmentCard" name="build" value="City" class="biggerRadioButton"/>Dev Card
+                                <input type="radio" id="buildRoad" name="build" value="Road" class="biggerRadioButton"/><span class="detailText">Road</span><br />
+                                <input type="radio" id="buildSettlement" name="build" value="Settlement" class="biggerRadioButton"/><span class="detailText">Settlement</span><br />
+                                <input type="radio" id="buildCity" name="build" value="City" class="biggerRadioButton"/><span class="detailText">City</span><br />              
+                                <input type="radio" id="buildDevelopmentCard" name="build" value="City" class="biggerRadioButton"/><span class="detailText">Dev Card</span>
                             </td>
                             <td colspan="9" style="vertical-align:bottom;">
                                 <input type="button" value="Build" onclick="Build()" style="width:75px;" class="niceButton"/>
@@ -199,20 +202,20 @@
                             <td colspan="9">
                                 <table >
                                     <tr>
-                                        <td><input type="radio" id="playKnight" name="play" value="Road" class="biggerRadioButton"/></td><td><div id="cardCountKnight"></div></td>                                        
+                                        <td><input type="radio" id="playKnight" name="play" value="Road" class="biggerRadioButton"/></td><td><div id="cardCountKnight" class="detailText"></div></td>                                        
                                     </tr><tr><td></td></tr>
                                     <tr>
-                                        <td><input type="radio" id="playYearOfPlenty" name="play" value="Settlement" class="biggerRadioButton"/></td><td><div id="cardCountYearOfPlenty"></div></td>                                    
+                                        <td><input type="radio" id="playYearOfPlenty" name="play" value="Settlement" class="biggerRadioButton"/></td><td><div id="cardCountYearOfPlenty" class="detailText"></div></td>                                    
                                     </tr><tr><td></td></tr>
                                     <tr>
-                                        <td><input type="radio" id="playRoadBuilding" name="play" value="City" class="biggerRadioButton"/></td><td><div id="cardCountRoadBuilding"></div> </td>                                    
+                                        <td><input type="radio" id="playRoadBuilding" name="play" value="City" class="biggerRadioButton"/></td><td><div id="cardCountRoadBuilding" class="detailText"></div> </td>                                    
                                     </tr><tr><td></td></tr>
                                     <tr>
-                                        <td><input type="radio" id="playMonopoly" name="play" value="City" class="biggerRadioButton"/></td><td><div id="cardCountMonopoly"></div></td>                                    
+                                        <td><input type="radio" id="playMonopoly" name="play" value="City" class="biggerRadioButton"/></td><td><div id="cardCountMonopoly" class="detailText"></div></td>                                    
                                     </tr><tr><td></td></tr>
                                     <tr>
                                         <td></td>
-                                        <td><div id="cardCountVictoryPoint"></div></td>   
+                                        <td><div id="cardCountVictoryPoint" class="detailText"></div></td>   
                                         <td style="padding-left:20px;" ><input type="button" value="Play" onclick="PlayCard()" style="width:75px;" class="niceButton" /></td>   
                                     </tr><tr><td><br /></td></tr>
                                 </table>                                                                                                                                                                                                                                                                               
@@ -228,7 +231,7 @@
                     
                         <tr>
                             <td colspan="5"><br />
-                                <div id="TradeConfirmDetails" style="visibility:hidden;width:275px;font-size:20px;border-style:groove;">Do you accept 1 brick, 2 wood, 2 wool, 2 ore, 2 wheat for 1 brick, 2 wood, 2 wool, 2 ore, 2 wheat?</div>
+                                <div id="TradeConfirmDetails" style="visibility:hidden;width:275px;font-size:20px;border-style:groove;" class="detailText">Do you accept 1 brick, 2 wood, 2 wool, 2 ore, 2 wheat for 1 brick, 2 wood, 2 wool, 2 ore, 2 wheat?</div>
                             </td>
                         </tr>
                         <tr>
@@ -293,7 +296,7 @@
     var globalGameState = null;
     var state = null;
 
-    var totalNumberOfImages = 52;
+    var totalNumberOfImages = 63;
     var numberOfLoadedImages = 0;
     var imagePaths;
     var imageCache = new Object();
@@ -384,6 +387,18 @@
         imagePaths[49] = '/Image/roadOverlay_1.png';
         imagePaths[50] = '/Image/roadOverlay_2.png';
         imagePaths[51] = '/Image/roadOverlay_3.png';
+
+        imagePaths[52] = '/Image/dice2.png';
+        imagePaths[53] = '/Image/dice3.png';
+        imagePaths[54] = '/Image/dice4.png';
+        imagePaths[55] = '/Image/dice5.png';
+        imagePaths[56] = '/Image/dice6.png';
+        imagePaths[57] = '/Image/dice7.png';
+        imagePaths[58] = '/Image/dice8.png';
+        imagePaths[59] = '/Image/dice9.png';
+        imagePaths[60] = '/Image/dice10.png';
+        imagePaths[61] = '/Image/dice11.png';
+        imagePaths[62] = '/Image/dice12.png';
 
         for (var i = 0; i < imagePaths.length; i++) {
             var img = new Image();
