@@ -64,6 +64,17 @@
     <Content Include="Game.html" />
     <Content Include="Image\brickTile.png" />
     <Content Include="Image\dessertTile.png" />
+    <Content Include="Image\dice10.png" />
+    <Content Include="Image\dice11.png" />
+    <Content Include="Image\dice12.png" />
+    <Content Include="Image\dice2.png" />
+    <Content Include="Image\dice3.png" />
+    <Content Include="Image\dice4.png" />
+    <Content Include="Image\dice5.png" />
+    <Content Include="Image\dice6.png" />
+    <Content Include="Image\dice7.png" />
+    <Content Include="Image\dice8.png" />
+    <Content Include="Image\dice9.png" />
     <Content Include="Image\ivy.png" />
     <Content Include="Image\oreTile.png" />
     <Content Include="Image\redRoad1.png" />
