@@ -90,7 +90,7 @@
     <Content Include="Image\wheatTile.png" />
     <Content Include="Image\woodTile.png" />
     <Content Include="Image\woolTile.png" />
-    <Content Include="Lobby.html" />
+    <Content Include="index.html" />
     <Content Include="Styles.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -121,7 +121,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52659</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:64952/</IISUrl>
+          <IISUrl>http://localhost:80/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
