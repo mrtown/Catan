@@ -1,18 +1,31 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Catan Lobby</title>
+    <title>Catan</title>
+
+    <link rel="stylesheet" type="text/css" href="catan.css">
+    
 </head>
 <body style="background-color:LightGrey;">
 
-<center>
-    <h2>Catan Lobby</h2>
 
-    <div id="lblEnterName">Enter Name:</div> 
-    <input id="txtName" type="text" style="height:15px;width:200px;" />
-    <input id="btnOkName" type="button" value="Continue" onclick="Continue()" />
+    <h2>Welcome to the Catan Lobby!</h2>
+    <div id="loginContainer">
+        <div class="inputContainer">
+            <label for="txtName">Name:</label>
+            <input id="txtName" type="text" class="inputText" maxlength="20" />
+        </div> 
+        <div class="inputContainer">
+            <label for="txtServerAddress">Server:</label>
+            <input id="txtServerAddress" type="text" class="inputText" maxlength="20" />
+        </div>
+        
+        <div style="padding-top:1em;">
+            <input id="btnOkName" type="button" value="Continue" />
+        </div>
+    </div>
 
-    <table id="LobbyTable" style="visibility:hidden;">
+    <table id="LobbyTable">
         <tr>
             <td colspan="2"><textarea id="txtChat" style="height:400px;width:400px;"></textarea></td>
             <td style="vertical-align:top;"><textarea id="txtUsers" style="height:200px;width:150px;"></textarea></td>
@@ -27,26 +40,65 @@
     </table>
     
     
-</center>
+
 </body>
 </html>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 <script lang="JavaScript">
+
+    // globals 
     var ws = null;
-    var name = null;
+    var _name = null;
+    var _server = null;
     var localID = null;
 
-    function Continue() {
-        var txtBox = document.getElementById('txtName');
-        if (txtBox.value.length < 1) {
-            alert('You must enter a name');
-            return;
-        }
+    preProcess();
 
-        name = txtBox.value;
+    function preProcess() {
 
-        Initialize();
-        
+        // attach event handlers
+        $('#txtName').keypress(function(args) {
+            if (args.keyCode == 13) 
+                $('#txtServerAddress').focus();        
+        });
+        $('#txtServerAddress').keypress(function(args) {
+            if (args.keyCode == 13) 
+                process();
+        });
+
+        $('#btnOkName').click(process);
+        $('#LobbyTable').hide();
+        $('#txtName').focus();                
+    }
+
+    function process() {
+
+        var name = $('#txtName').val().trim();
+        var server = $('#txtServerAddress').val().trim();
+
+        if (name && server)
+            if (name.length > 0 && server.length > 0) 
+                if (isNameValid(name) && isServerValid(server)) {
+                    _name = name;
+                    _server = server;
+                    Initialize();
+
+                    return;
+                }
+            
+        alert('A valid Name and Server must be provided');
+    }
+
+    function isNameValid(name) {
+        var pattern = /^[A-Za-z]+$/;
+        return pattern.test(name);
+    }
+
+    function isServerValid(server) {
+        var pattern = /^([0-9]+\.){3}[0-9]+$/;
+        return pattern.test(server);
     }
 
     function SendMessage() {
@@ -61,10 +113,9 @@
 
     function Initialize() {
 
-        document.getElementById('LobbyTable').style.visibility = 'visible';
-        document.getElementById('txtName').style.visibility = 'hidden';
-        document.getElementById('btnOkName').style.visibility = 'hidden';
-        document.getElementById('lblEnterName').style.visibility = 'hidden';
+
+        $('#loginContainer').hide();
+        $('#LobbyTable').show();
 
         ws = new WebSocket('ws://174.118.46.202:64951');
 
@@ -97,9 +148,5 @@
         }
     }
 
-
-    //ws.onclose = function () {
-    //    // websocket is closed.
-    //    //   alert("Connection is closed...");
-    //};
 </script>
+
