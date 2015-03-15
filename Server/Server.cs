@@ -166,21 +166,34 @@ namespace Server
 
         static void Main(string[] args)
         {
-            ParseCoordinates();
+            Console.Write("Enter port: ");
+            string data = Console.ReadLine();
+            int port;
 
-            var aServer = new WebSocketServer(64951, IPAddress.Any) {
-                OnReceive = OnReceive,
-                 //OnSend = OnSend,
-                //OnConnect = OnConnect,
-                OnConnected = OnConnected,
-                OnDisconnect = OnDisconnect,
-                TimeOut = new TimeSpan(0, 5, 0)
-            };
+            if (Int32.TryParse(data, out port))
+            {
+                ParseCoordinates();
 
-            if (AllConnections == null)
-                AllConnections = aServer.AllConnections;
+                var aServer = new WebSocketServer(port, IPAddress.Any)
+                {
+                    OnReceive = OnReceive,
+                    //OnSend = OnSend,
+                    //OnConnect = OnConnect,
+                    OnConnected = OnConnected,
+                    OnDisconnect = OnDisconnect,
+                    TimeOut = new TimeSpan(0, 5, 0)
+                };
 
-            aServer.Start();
+                if (AllConnections == null)
+                    AllConnections = aServer.AllConnections;
+
+                aServer.Start();
+            }
+            else
+            {
+                Console.WriteLine("The port was unacceptable.");
+                Console.ReadKey();
+            }
         }
 
         static void OnDisconnect(UserContext context)
