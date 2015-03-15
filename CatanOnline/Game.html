@@ -295,12 +295,13 @@
 </html>
 
 
-<script lang="javascript">
-    var ws = new WebSocket("ws://174.118.46.202:64951");
+<script lang="javascript">    
     var c = document.getElementById("mainCanvas");
     var ctx = c.getContext("2d");
     var gameID = getParameterByName('gid');
     var localID = getParameterByName('pid');
+    var server = getParameterByName('server');
+    var ws = new WebSocket("ws://" + server);
     var globalGameState = null;
     var state = null;
 

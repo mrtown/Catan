@@ -154,7 +154,7 @@
             lobbyList.value = value.Payload;
         }
         if (value.Control == 'START_GAME') {
-            window.location = 'Game.html?pid=' + localID + '&gid=' + value.Payload;
+            window.location = 'Game.html?pid=' + localID + '&gid=' + value.Payload + '&server=' + _server;
         }
     }
 
