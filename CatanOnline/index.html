@@ -71,6 +71,17 @@
         $('#btnOkName').click(process);
         $('#LobbyTable').hide();
         $('#txtName').focus();                
+        
+        getServerInfo().then(function(data) {
+            $('#txtServerAddress').val(data.server);        
+        });
+    }
+
+    function getServerInfo() {
+        return $.ajax({
+            dataType: 'json',
+            url: 'serverInfo.json'
+        });
     }
 
     function process() {
@@ -97,7 +108,7 @@
     }
 
     function isServerValid(server) {
-        var pattern = /^([0-9]+\.){3}[0-9]+$/;
+        var pattern = /^([0-9]+\.){3}[0-9]+:[0-9]+$/;
         return pattern.test(server);
     }
 
@@ -113,11 +124,10 @@
 
     function Initialize() {
 
-
         $('#loginContainer').hide();
         $('#LobbyTable').show();
 
-        ws = new WebSocket('ws://174.118.46.202:64951');
+        ws = new WebSocket('ws://' + server);
 
         ws.onopen = function () {
             ws.send('NEW_LOBBY_USER' + ':' + name);
