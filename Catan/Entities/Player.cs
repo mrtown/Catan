@@ -24,9 +24,11 @@ namespace Catan.Entities
         private int _score;
         private int _displayScore;
         private int _longestRoadLength;
+        private int _numberOfHarbours;
 
         private bool _hasLargestArmy;
         private bool _hasLongestRoad;
+        private bool _hasMostHarbours;
 
         private bool _hadLongestRoadDecreased;
 
@@ -49,17 +51,19 @@ namespace Catan.Entities
             _color = color;
             _playerNumber = playerNumber;
 
-            _wood = 0;
-            _wool = 0;
-            _wheat = 0;
-            _brick = 0;
-            _ore = 0;
+            _wood = 100;
+            _wool = 100;
+            _wheat = 100;
+            _brick = 100;
+            _ore = 100;
 
             _score = 0;
             _longestRoadLength = 0;
+            _numberOfHarbours = 0;
 
             _hasLongestRoad = false;
             _hasLargestArmy = false;
+            _hasMostHarbours = false;
             _hadLongestRoadDecreased = false;
 
             _playedCards = new List<AbstractDevelopmentCard>();
@@ -286,6 +290,12 @@ namespace Catan.Entities
             }
         }
 
+        public int NumberOfHarbours
+        {
+            get { return _numberOfHarbours; }
+            set { _numberOfHarbours = value; }
+        }
+
         public bool HadLongestRoadLengthDecreased
         {
             get { return _hadLongestRoadDecreased; }
@@ -314,6 +324,12 @@ namespace Catan.Entities
         {
             get { return _hasLongestRoad; }
             set { _hasLongestRoad = value; }
+        }
+
+        public bool HasMostHarbours
+        {
+            get { return _hasMostHarbours; }
+            set { _hasMostHarbours = value; }
         }
 
         public string ID

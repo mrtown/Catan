@@ -32,6 +32,7 @@ namespace Catan.Entities
         private List<AbstractDevelopmentCard> _developmentCardDeck;
         private Player _playerWithLongestRoad;
         private Player _playerWithLargestArmy;
+        private Player _playerWithMostHarbours;
         private int _rolled = 0;
         private string _message;
         private string _winner;
@@ -54,6 +55,12 @@ namespace Catan.Entities
         {
             get { return _playerWithLargestArmy; }
             set { _playerWithLargestArmy = value; }
+        }
+
+        public Player PlayerWithMostHarbours
+        {
+            get { return _playerWithMostHarbours; }
+            set { _playerWithMostHarbours = value; }
         }
 
         public int Rolled
@@ -193,6 +200,7 @@ namespace Catan.Entities
 
             _playerWithLargestArmy = null;
             _playerWithLongestRoad = null;
+            _playerWithMostHarbours = null;
 
             _winner = null;
 

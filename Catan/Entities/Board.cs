@@ -215,6 +215,7 @@ namespace Catan.Entities
         {
             _gameState.PlayerWithLongestRoad = WhoHasLongestRoad();
             _gameState.PlayerWithLargestArmy = WhoHasLargestArmy();
+            _gameState.PlayerWithMostHarbours = WhoHasMostHarbours();
 
             _gameState.Players.ForEach(p => CalculatePlayerScore(p));
 
@@ -237,6 +238,9 @@ namespace Catan.Entities
                 score += 2;
             if (p.HasLongestRoad)
                 score += 2;
+            if (p.HasMostHarbours)
+                score += 2;
+
 
             List<Settlement> settlements = _settlements.Where(s => s.PlayerID == p.ID).ToList();
 
@@ -287,6 +291,58 @@ namespace Catan.Entities
             }
 
             return largestArmyPlayer;
+        }
+
+        private int CalculateNumberOfHarbours(Player player)
+        {
+            int harbours = 0;
+
+            foreach (Settlement s in _settlements)          
+                if (s.PlayerID == player.ID)
+                    foreach (Port p in _ports)
+                        if (_gameState.PortSettlementAdjacency[p.ID, s.ID])
+                            harbours++;            
+                         
+            return harbours;
+        }
+
+        private Player WhoHasMostHarbours()
+        {
+
+            Player mostHarboursPlayer = null;
+            foreach (Player player in _gameState.Players)
+                player.NumberOfHarbours = CalculateNumberOfHarbours(player);
+
+            int maxHarbourCount = _gameState.Players.Max(p => p.NumberOfHarbours);
+            List<Player> playersWithMostHarbours = _gameState.Players.Where(p => p.NumberOfHarbours == maxHarbourCount &&
+                                                                                 p.NumberOfHarbours >= 3).ToList();
+
+            if (_gameState.PlayerWithMostHarbours == null)
+            {
+                if (playersWithMostHarbours.Count == 0)
+                    return null;
+                else if (playersWithMostHarbours.Count == 1)
+                {
+                    mostHarboursPlayer = playersWithMostHarbours[0];
+                    playersWithMostHarbours[0].HasMostHarbours = true;
+                }
+            }
+            else
+            {
+                if (playersWithMostHarbours.Count == 1)
+                {
+                    mostHarboursPlayer = playersWithMostHarbours[0];
+                    playersWithMostHarbours[0].HasMostHarbours = true;
+                    if (playersWithMostHarbours[0].ID != _gameState.PlayerWithMostHarbours.ID)
+                        _gameState.PlayerWithMostHarbours.HasMostHarbours = false;
+                }
+                else
+                {
+                    mostHarboursPlayer = _gameState.PlayerWithMostHarbours;
+                }
+             }
+
+            return mostHarboursPlayer;            
         }
 
         private Player WhoHasLongestRoad()
