@@ -127,11 +127,13 @@
         $('#loginContainer').hide();
         $('#LobbyTable').show();
 
-        ws = new WebSocket('ws://' + server);
+        ws = new WebSocket('ws://' + _server);
 
         ws.onopen = function () {
-            ws.send('NEW_LOBBY_USER' + ':' + name);
+            ws.send('NEW_LOBBY_USER' + ':' + _name);
         };
+
+        console.log('this is the name: ' + _name);
 
         ws.onmessage = function (evt) {
             var data = evt.data;

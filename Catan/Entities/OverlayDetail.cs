@@ -9,14 +9,21 @@ namespace Catan.Entities
     public class OverlayDetail : MapObject
     {
         private string _playerID;
-        public OverlayDetail(int id, DrawCoordinate drawCoordinate, string image, string playerID)
+        private string _clientPredictionImage;
+        public OverlayDetail(int id, DrawCoordinate drawCoordinate, string image, string playerID, string clientPredictionImage)
             : base(id, drawCoordinate, image)
         {
             _playerID = playerID;
+            _clientPredictionImage = clientPredictionImage;
         }
         public string PlayerID
         {
             get { return _playerID; }
+        }
+
+        public string ClientPredictionImage
+        {
+            get { return _clientPredictionImage; }
         }
     }
 }

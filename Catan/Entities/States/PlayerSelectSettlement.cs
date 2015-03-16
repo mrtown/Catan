@@ -44,7 +44,10 @@ namespace Catan.Entities.States
                     dc.X -= 30;
                     dc.Y -= 28;
 
-                    OverlayDetail detail = new OverlayDetail(i, dc, "settlementOverlay.png", _playerID);
+                    Player player = _board.GetPlayerByID(_playerID);
+                    string clientPredictionImage = "settlement_" + player.Color + ".png";
+
+                    OverlayDetail detail = new OverlayDetail(i + 1, dc, "settlementOverlay.png", _playerID, clientPredictionImage);
                     _overlayDetails.Add(detail);
 
                 }                

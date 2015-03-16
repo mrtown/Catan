@@ -554,7 +554,28 @@
         ProcessResponse(value);
     };
 
+    function clientPrediction(id) {
+        for(var i=0; i<globalGameState.State.OverlayDetails.length; i++)             
+            if (id == globalGameState.State.OverlayDetails[i].ID) {
+                var board = globalGameState.Board;
+                ctx.drawImage(imageCache['/Image/' + globalGameState.State.OverlayDetails[i].ClientPredictionImage], 
+                              globalGameState.State.OverlayDetails[i].DrawCoordinate.X, 
+                              globalGameState.State.OverlayDetails[i].DrawCoordinate.Y);
+                break;
+            }
+    }
 
+    function clientPredictionCityBased(id) {
+        var board = globalGameState.Board;
+        
+        for(var i=0; i<board.Settlements.length; i++)             
+            if (id == board.Settlements[i].ID) {
+                ctx.drawImage(imageCache['/Image/' + board.Settlements[i].Image], 
+                              board.Settlements[i].DrawCoordinate.X, 
+                              board.Settlements[i].DrawCoordinate.Y);
+                break;
+            }
+    }
 
     function MapClick(event) {
 
@@ -562,19 +583,22 @@
 
         if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_SETTLEMENT') {
             if (globalGameState.State.PlayerID == localID) {
-                var settlementID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.SettlementCoordinates, 40);                
+                var settlementID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.SettlementCoordinates, 40);  
+                clientPrediction(settlementID);              
                 ws.send('PLAYER_SELECT_SETTLEMENT' + ':' + gameID + ':' + localID + ':' + settlementID);
             }            
         }
         else if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_ROAD') {
             if (globalGameState.State.PlayerID == localID) {
                 var roadID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.RoadCoordinates, 40);
+                clientPrediction(roadID);              
                 ws.send('PLAYER_SELECT_ROAD' + ':' + gameID + ':' + localID + ':' + roadID);
             }
         }
         else if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_CITY') {
             if (globalGameState.State.PlayerID == localID) {
                 var settlementID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.SettlementCoordinates, 40);
+                clientPredictionCityBased(settlementID);
                 ws.send('PLAYER_SELECT_CITY' + ':' + gameID + ':' + localID + ':' + settlementID);
             }
         }

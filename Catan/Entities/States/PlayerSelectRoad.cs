@@ -151,7 +151,10 @@ namespace Catan.Entities.States
                         drawCoordinate.Y -= 26;
                     }
 
-                    OverlayDetail detail = new OverlayDetail(i, drawCoordinate, "roadOverlay" + roadImageIndex + ".png", _playerID);
+                    Player player = _board.GetPlayerByID(_playerID);
+                    string clientPredictionImage = "road_" + player.Color + roadImageIndex + ".png";
+
+                    OverlayDetail detail = new OverlayDetail(i + 1, drawCoordinate, "roadOverlay" + roadImageIndex + ".png", _playerID, clientPredictionImage);
                     _overlayDetails.Add(detail);
 
                 }
