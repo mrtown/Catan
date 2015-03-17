@@ -225,7 +225,7 @@ namespace Catan.Entities
 
         private void CheckWinningCondition()
         {
-            Player player = _gameState.Players.Where(p => p.Score >= 10).FirstOrDefault();
+            Player player = _gameState.Players.Where(p => p.Score >= 11).FirstOrDefault();
             if (player != null)
                 _gameState.Winner = player.Name;
         }
@@ -297,11 +297,11 @@ namespace Catan.Entities
         {
             int harbours = 0;
 
-            foreach (Settlement s in _settlements)          
+            foreach (Settlement s in _settlements)
                 if (s.PlayerID == player.ID)
                     foreach (Port p in _ports)
                         if (_gameState.PortSettlementAdjacency[p.ID, s.ID])
-                            harbours++;            
+                            harbours += s.IsCity ? 2 : 1;
                          
             return harbours;
         }

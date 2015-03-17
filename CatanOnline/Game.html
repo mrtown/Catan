@@ -305,7 +305,7 @@
     var globalGameState = null;
     var state = null;
 
-    var totalNumberOfImages = 63;
+    var totalNumberOfImages = 64;
     var numberOfLoadedImages = 0;
     var imagePaths;
     var imageCache = new Object();
@@ -408,6 +408,7 @@
         imagePaths[60] = '/Image/dice10.png';
         imagePaths[61] = '/Image/dice11.png';
         imagePaths[62] = '/Image/dice12.png';
+        imagePaths[63] = '/Image/anchor.png';
 
         for (var i = 0; i < imagePaths.length; i++) {
             var img = new Image();
@@ -759,10 +760,10 @@
             DrawImage(imageCache['/Image/longestRoad.png'], 15 + xOffset, 155 + yOffset);
         }
         if (player.HasLargestArmy) {
-            DrawImage(imageCache['/Image/largestArmy.png'], 75 + xOffset, 155+ yOffset);
+            DrawImage(imageCache['/Image/largestArmy.png'], 75 + xOffset, 155 + yOffset);
         }
         if (player.HasMostHarbours) {
-            
+            DrawImage(imageCache['/Image/anchor.png'], 135 + xOffset, 155 + yOffset);   
         }
     }
 
