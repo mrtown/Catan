@@ -336,10 +336,6 @@
 
         if (audioBlacklist.indexOf(values[0]) < 0) {
             PlayAudioWorker(values[1]);
-            // var aud = new Audio('/audio/' + values[1]);
-            // aud.addEventListener('loadeddata', function () {
-            //     aud.play();
-            // }, false);
             audioBlacklist.push(values[0]);
         }
 
@@ -697,8 +693,11 @@
             
             if (!dirtyAudio)
                 PlayAudio(globalGameState.State.Audio);
-            else
+            else {
+                var values = globalGameState.State.Audio.split(':');
+                audioBlacklist.push(values[0]);
                 dirtyAudio = false;
+            }
         }
     }
 
