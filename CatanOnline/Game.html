@@ -304,6 +304,7 @@
     var ws = new WebSocket("ws://" + server);
     var globalGameState = null;
     var state = null;
+    var dirtyAudio = false;
 
     var totalNumberOfImages = 64;
     var numberOfLoadedImages = 0;
@@ -322,16 +323,23 @@
     //}, false);
     /////////////////////
     
+    function PlayAudioWorker(filename) {
+        var aud = new Audio('/audio/' + filename);
+        aud.addEventListener('loadeddata', function () {
+            aud.play();
+        }, false);        
+    }
 
     function PlayAudio(audioFileName) {
 
         var values = audioFileName.split(':');
 
         if (audioBlacklist.indexOf(values[0]) < 0) {
-            var aud = new Audio('/audio/' + values[1]);
-            aud.addEventListener('loadeddata', function () {
-                aud.play();
-            }, false);
+            PlayAudioWorker(values[1]);
+            // var aud = new Audio('/audio/' + values[1]);
+            // aud.addEventListener('loadeddata', function () {
+            //     aud.play();
+            // }, false);
             audioBlacklist.push(values[0]);
         }
 
@@ -555,13 +563,15 @@
         ProcessResponse(value);
     };
 
-    function clientPrediction(id) {
+    function clientPrediction(id, audioFileName) {
         for(var i=0; i<globalGameState.State.OverlayDetails.length; i++)             
             if (id == globalGameState.State.OverlayDetails[i].ID) {
                 var board = globalGameState.Board;
                 ctx.drawImage(imageCache['/Image/' + globalGameState.State.OverlayDetails[i].ClientPredictionImage], 
                               globalGameState.State.OverlayDetails[i].DrawCoordinate.X, 
-                              globalGameState.State.OverlayDetails[i].DrawCoordinate.Y);
+                              globalGameState.State.OverlayDetails[i].DrawCoordinate.Y);            
+                PlayAudioWorker(audioFileName);
+                dirtyAudio = true;
                 break;
             }
     }
@@ -571,9 +581,14 @@
         
         for(var i=0; i<board.Settlements.length; i++)             
             if (id == board.Settlements[i].ID) {
-                ctx.drawImage(imageCache['/Image/' + board.Settlements[i].Image], 
+                var settlementImage = board.Settlements[i].Image;
+                var data = settlementImage.split('_');
+                ctx.drawImage(imageCache['/Image/city_' + data[1]],                     
                               board.Settlements[i].DrawCoordinate.X, 
                               board.Settlements[i].DrawCoordinate.Y);
+                
+                PlayAudioWorker('HRESCUE.wav');
+                dirtyAudio = true;
                 break;
             }
     }
@@ -585,14 +600,14 @@
         if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_SETTLEMENT') {
             if (globalGameState.State.PlayerID == localID) {
                 var settlementID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.SettlementCoordinates, 40);  
-                clientPrediction(settlementID);              
+                clientPrediction(settlementID, 'CONSTRCT.wav');              
                 ws.send('PLAYER_SELECT_SETTLEMENT' + ':' + gameID + ':' + localID + ':' + settlementID);
             }            
         }
         else if (globalGameState.State.StateTypeString == 'PLAYER_SELECT_ROAD') {
             if (globalGameState.State.PlayerID == localID) {
                 var roadID = GetID(event.pageX - rect.left - window.pageXOffset, event.pageY - rect.top - window.pageYOffset, globalGameState.RoadCoordinates, 40);
-                clientPrediction(roadID);              
+                clientPrediction(roadID, 'MINE.wav');              
                 ws.send('PLAYER_SELECT_ROAD' + ':' + gameID + ':' + localID + ':' + roadID);
             }
         }
@@ -679,7 +694,11 @@
 
     function PlayAvailableAudio() {
         if (globalGameState.State.Audio != '' && globalGameState.State.Audio != undefined) {
-            PlayAudio(globalGameState.State.Audio);
+            
+            if (!dirtyAudio)
+                PlayAudio(globalGameState.State.Audio);
+            else
+                dirtyAudio = false;
         }
     }
 
