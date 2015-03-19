@@ -14,6 +14,7 @@ namespace Catan.Entities
         private List<Settlement> _settlements;
         private GameState _gameState;
         private List<Enums.TileType> _deck;
+        private bool _isHarbourMasterEnabled;
         int _frequencyIndex = 0;
         private List<Frequency> _frequencies = CreateFrequencyDeck();
         private List<Catan.Enums.PortType> _portDeck = CreatePortDeck();
@@ -22,8 +23,9 @@ namespace Catan.Entities
 
         private static Random _randomNumberGenerator = new Random(DateTime.Now.Millisecond);
 
-        public Board(GameState gameState)
+        public Board(GameState gameState, bool isHarbourMasterEnabled)
         {
+            _isHarbourMasterEnabled = isHarbourMasterEnabled;
             _ports = new List<Port>();
             _tiles = new List<Tile>();
             _roads = new List<Road>();
@@ -215,7 +217,9 @@ namespace Catan.Entities
         {
             _gameState.PlayerWithLongestRoad = WhoHasLongestRoad();
             _gameState.PlayerWithLargestArmy = WhoHasLargestArmy();
-            _gameState.PlayerWithMostHarbours = WhoHasMostHarbours();
+            
+            if (_isHarbourMasterEnabled)
+                _gameState.PlayerWithMostHarbours = WhoHasMostHarbours();
 
             _gameState.Players.ForEach(p => CalculatePlayerScore(p));
 
@@ -225,7 +229,9 @@ namespace Catan.Entities
 
         private void CheckWinningCondition()
         {
-            Player player = _gameState.Players.Where(p => p.Score >= 11).FirstOrDefault();
+            int winScore = _isHarbourMasterEnabled ? 11 : 10;
+
+            Player player = _gameState.Players.Where(p => p.Score >= winScore).FirstOrDefault();
             if (player != null)
                 _gameState.Winner = player.Name;
         }
@@ -237,11 +243,10 @@ namespace Catan.Entities
             if (p.HasLargestArmy)
                 score += 2;
             if (p.HasLongestRoad)
+                score += 2;                      
+            if (p.HasMostHarbours && _isHarbourMasterEnabled)
                 score += 2;
-            if (p.HasMostHarbours)
-                score += 2;
-
-
+            
             List<Settlement> settlements = _settlements.Where(s => s.PlayerID == p.ID).ToList();
 
             score += settlements.Count();

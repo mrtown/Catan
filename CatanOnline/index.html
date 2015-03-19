@@ -28,7 +28,11 @@
     <table id="LobbyTable">
         <tr>
             <td colspan="2"><textarea id="txtChat" style="height:400px;width:400px;"></textarea></td>
-            <td style="vertical-align:top;"><textarea id="txtUsers" style="height:200px;width:150px;"></textarea></td>
+            <td style="vertical-align:top;">
+                <textarea id="txtUsers" style="height:200px;width:150px;"></textarea><br>
+                <h3>Game Options</h3>
+                <input id="isHarbourMaster" type="checkbox">Harbour Master</input><br>
+            </td>
         </tr>
         <tr>
             <td><input type="text" id="txtMessage" style="height:15px;width:275px;"></input></td>
@@ -119,7 +123,8 @@
     }
 
     function Play() {
-        ws.send('START_GAME');
+        var enableHarbourMaster = $('#isHarbourMaster').is(':checked');
+        ws.send('START_GAME:' + enableHarbourMaster);
     }
 
     function Initialize() {

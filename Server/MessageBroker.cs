@@ -43,8 +43,8 @@ namespace Server
                 case Message.CHAT_MESSAGE:
                     ProcessChatMessage(parsedMessage[1], parsedMessage[2]);
                     break;
-                case Message.START_GAME:
-                    StartGame();
+                case Message.START_GAME:                    
+                    StartGame(parsedMessage[1]);
                     break;
                 case Message.ENTERING_GAME:
                     lock(_lock) 
@@ -420,6 +420,7 @@ namespace Server
                 }
 
                 game.GameState = new GameState(newUsers, 
+                                               game.IsHarbourMasterEnabled,
                                                Server.PortCoordinates,
                                                Server.PlayerCoordinates,
                                                Server.SettlementCoordinates, 
@@ -439,10 +440,12 @@ namespace Server
 
         }
 
-        private static void StartGame()
+        private static void StartGame(string harbourMastserEnabled)
         {
             List<User> lobbyUsers = Server.GetLobbyUsers();
-            Game newGame = new Game(lobbyUsers.Count);
+         
+            Game newGame = new Game(lobbyUsers.Count, bool.Parse(harbourMastserEnabled));
+            
             Server.Games.Add(newGame);            
             newGame.Users.AddRange(lobbyUsers);
             Server.ClearLobbyUsers();
@@ -453,9 +456,6 @@ namespace Server
                 string json = _serializer.Serialize(msg);
                 user.Context.Send(json);
             }
-
-            //newGame.StartPinging();
-            //newGame.StartSendingPingStatuses();
         }
 
         private static void ProcessChatMessage(string userID, string message)

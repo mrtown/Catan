@@ -21,13 +21,14 @@ namespace Server
         Dictionary<string, DateTime> _outstandingPings;
         Dictionary<string, List<Tuple<int, DateTime>>> _pingHistory;
         private static JavaScriptSerializer _serializer = new JavaScriptSerializer();
+        private bool _harbourMasterEnabled;
 
         public User GetUserByID(string ID)
         {
             return _users.Find(delegate(User a) { return a.ID == ID; });
         }
 
-        public Game(int numberOfPlayers)
+        public Game(int numberOfPlayers, bool harbourMasterEnabled)
         {
             _id = Guid.NewGuid().ToString();
             _numberOfPlayers = numberOfPlayers;
@@ -36,6 +37,7 @@ namespace Server
             _gameState = null;
             _outstandingPings = new Dictionary<string, DateTime>();
             _pingHistory = new Dictionary<string, List<Tuple<int, DateTime>>>();
+            _harbourMasterEnabled = harbourMasterEnabled;
         }
 
         #region Ping Stuff
@@ -137,6 +139,10 @@ namespace Server
         }
         #endregion
 
+        public bool IsHarbourMasterEnabled
+        {
+            get { return _harbourMasterEnabled; }
+        }
 
         public GameState GameState
         {

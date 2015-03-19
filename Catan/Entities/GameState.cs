@@ -164,6 +164,7 @@ namespace Catan.Entities
         }
 
         public GameState(List<KeyValuePair<string, string>> users, 
+                         bool isHarbourMasterEnabled,
                          List<DrawCoordinate> portCoordinates,
                          List<DrawCoordinate> playerCoordinates,
                          List<DrawCoordinate> settlementCoordinates, 
@@ -206,7 +207,7 @@ namespace Catan.Entities
 
             _message = null;
 
-            _board = new Board(this);
+            _board = new Board(this, isHarbourMasterEnabled);
             _state = CreateStateFlow();
 
             _diceRollFrequencies = BuildEmptyDiceRollFrequencies();
