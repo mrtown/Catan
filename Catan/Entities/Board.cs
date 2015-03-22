@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catan.Entities
 {
+    [Serializable]
     public class Board
     {
         private List<Port> _ports;

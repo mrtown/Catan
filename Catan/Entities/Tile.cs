@@ -8,6 +8,7 @@ using Catan.Enums;
 
 namespace Catan.Entities
 {
+    [Serializable]
     public class Tile : MapObject
     {
         private TileType _tileType;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catan.Entities
 {
+    [Serializable]
     public abstract class AbstractState
     {
         protected StateType _stateType;

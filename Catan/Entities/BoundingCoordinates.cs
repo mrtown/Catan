@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catan.Entities
 {
+    [Serializable]
     public class BoundingCoordinates 
     {
         private int _ID;

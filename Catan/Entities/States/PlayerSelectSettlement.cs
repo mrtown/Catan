@@ -8,6 +8,7 @@ using Catan.Interfaces;
 
 namespace Catan.Entities.States
 {
+    [Serializable]
     public class PlayerSelectSettlement : AbstractState, IOverlay
     {
         private string _playerID;

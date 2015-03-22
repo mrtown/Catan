@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catan.Entities
 {
+    [Serializable]
     public class DrawCoordinate
     {
         private int _x, _y;

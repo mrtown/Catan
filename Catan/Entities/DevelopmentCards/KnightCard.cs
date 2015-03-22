@@ -10,6 +10,7 @@ using Catan.Entities.States;
 
 namespace Catan.Entities.DevelopmentCards
 {
+    [Serializable]
     public class KnightCard : AbstractDevelopmentCard
     {
         public KnightCard()

@@ -8,6 +8,7 @@ using Catan.Entities.States;
 
 namespace Catan.Entities.DevelopmentCards
 {
+    [Serializable]
     public class MonopolyCard : AbstractDevelopmentCard
     {
         public MonopolyCard()

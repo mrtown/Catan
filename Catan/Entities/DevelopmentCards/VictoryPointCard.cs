@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catan.Entities.DevelopmentCards
 {
+    [Serializable]
     public class VictoryPointCard : AbstractDevelopmentCard
     {
         public VictoryPointCard()

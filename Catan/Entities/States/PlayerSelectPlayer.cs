@@ -8,6 +8,7 @@ using Catan.Entities;
 
 namespace Catan.Entities.States
 {
+    [Serializable]
     public class PlayerSelectPlayer : AbstractState
     {
         private string _playerID;

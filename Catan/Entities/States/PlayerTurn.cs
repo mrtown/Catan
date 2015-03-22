@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catan.Entities.States
 {
-    
+    [Serializable]
     public class PlayerTurn : AbstractState
     {
         private string _playerID;

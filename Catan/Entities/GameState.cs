@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 using Catan.Entities.States;
 using Catan.Entities.DevelopmentCards;
@@ -10,7 +12,7 @@ using Catan.Interfaces;
 
 namespace Catan.Entities
 {
-
+    [Serializable]
     public class GameState
     {
         private Board _board;
@@ -305,6 +307,69 @@ namespace Catan.Entities
                         ((IOverlay)value).BuildOverlay();
                     _state = value; 
                 }
+        }
+
+        private static T DeepClone<T>(T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
+        }
+
+        public object Secure(string userID)
+        {
+            GameState copy = DeepClone<GameState>(this);
+
+            var otherPlayers = copy.Players.Where(p => p.ID != userID).ToList();
+            foreach (Player p in otherPlayers)
+            {
+                List<AbstractDevelopmentCard> list = new List<AbstractDevelopmentCard>();
+                p.HeldCards.ForEach(c => list.Add(null));
+                p.HeldCards = list;
+            }
+            
+            copy.Players.ForEach(p => p.Score = 0);
+
+            var state = new
+            {
+                Winner = copy.Winner,
+                Rolled = copy.Rolled,
+                SettlementCoordinates = copy.SettlementCoordinates,
+                RoadCoordinates = copy.RoadCoordinates,
+                TileCoordinates = copy.TileCoordinates,
+                PlayerCoordinates = copy.PlayerCoordinates,
+                DiceRollFrequencies = copy.DiceRollFrequencies,
+                Message = copy.Message,
+                Players = copy.Players, // this shit needs to be trimmed
+                Board = new
+                {
+                    Settlements = copy.Board.Settlements,
+                    Tiles = copy.Board.Tiles,
+                    Roads = copy.Board.Roads,
+                    Ports = copy.Board.Ports,
+                },
+                State = new
+                {
+                    RecipientPlayerID = copy.State is TradeConfirm ? ((TradeConfirm)copy.State).RecipientPlayerID : null,
+                    TradeConfirmDetails = copy.State is TradeConfirm ? ((TradeConfirm)copy.State).TradeConfirmDetails : null,
+                    RecipientHasEnoughResources = copy.State is TradeConfirm ? ((TradeConfirm)copy.State).RecipientHasEnoughResources.ToString() : null,
+                    CurrentPlayerID = copy.State.CurrentPlayerID,
+                    StateTypeString = copy.State.StateTypeString,
+                    PlayerID = userID,
+                    OverlayDetails = copy.State.OverlayDetails,
+                    CurrentText = copy.State.CurrentText,
+                    HistoryText = copy.State.HistoryText,
+                    Audio = copy.State.Audio                    
+                }
+
+            };
+            
+            return state;
         }
 
         public Board Board

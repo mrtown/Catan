@@ -8,6 +8,7 @@ using Catan.Enums;
 
 namespace Catan.Entities
 {
+    [Serializable]
     public class Player
     {
         private string _id;
@@ -51,11 +52,11 @@ namespace Catan.Entities
             _color = color;
             _playerNumber = playerNumber;
 
-            _wood = 0;
-            _wool = 0;
-            _wheat = 0;
-            _brick = 0;
-            _ore = 0;
+            _wood = 100;
+            _wool = 100;
+            _wheat = 100;
+            _brick = 100;
+            _ore = 100;
 
             _score = 0;
             _longestRoadLength = 0;
@@ -120,17 +121,17 @@ namespace Catan.Entities
             }
         }
 
-        public int NumberOfVictoryPoints
-        {
-            get
-            {
-                int c = 0;
-                foreach (AbstractDevelopmentCard card in _playedCards)
-                    if (card.Type == DevelopmentCardType.victoryPoint)
-                        c++;
-                return c;                
-            }
-        }
+        //public int NumberOfVictoryPoints
+        //{
+        //    get
+        //    {
+        //        int c = 0;
+        //        foreach (AbstractDevelopmentCard card in _playedCards)
+        //            if (card.Type == DevelopmentCardType.victoryPoint)
+        //                c++;
+        //        return c;                
+        //    }
+        //}
 
         public int NumberOfDevCards
         {

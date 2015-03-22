@@ -8,6 +8,7 @@ using Catan.Enums;
 
 namespace Catan.Entities
 {
+    [Serializable]
     public class Port : MapObject
     {
         private PortType _portType;

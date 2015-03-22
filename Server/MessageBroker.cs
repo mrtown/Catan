@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 using System.Web.Script.Serialization;
 
 using Alchemy.Classes;
@@ -325,16 +326,44 @@ namespace Server
             Multicast(game);
         }
 
+        private static T DeepClone<T>(T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
+        }
+
         private static void Multicast(Game game)
         {
-            ProtocolMessage msg = new ProtocolMessage(Message.GAME_STATE.ToString(), game.GameState);
-            string json = _serializer.Serialize(msg);
             foreach (User gameUser in game.Users)
             {
+                //GameState securedState = DeepClone<GameState>(game.GameState);
+                var securedState = game.GameState.Secure(gameUser.ID);
+
+                //ProtocolMessage msg = new ProtocolMessage(Message.GAME_STATE.ToString(), game.GameState);
+                ProtocolMessage msg = new ProtocolMessage(Message.GAME_STATE.ToString(), securedState);
+                string json = _serializer.Serialize(msg);
+
                 Thread t = new Thread(new ParameterizedThreadStart(AsyncProcess));
                 KeyValuePair<User, string> details = new KeyValuePair<User, string>(gameUser, json);
                 t.Start(details);
-            }    
+            }
+
+
+
+            //ProtocolMessage msg = new ProtocolMessage(Message.GAME_STATE.ToString(), game.GameState);
+            //string json = _serializer.Serialize(msg);
+            //foreach (User gameUser in game.Users)
+            //{
+            //    Thread t = new Thread(new ParameterizedThreadStart(AsyncProcess));
+            //    KeyValuePair<User, string> details = new KeyValuePair<User, string>(gameUser, json);
+            //    t.Start(details);
+            //}    
         }
 
         public static void AsyncProcess(object details)

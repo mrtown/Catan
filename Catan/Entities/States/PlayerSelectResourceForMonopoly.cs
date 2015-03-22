@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catan.Entities.States
 {
+    [Serializable]
     public class PlayerSelectResourceForMonopoly : AbstractState
     {
         private Player _player;
