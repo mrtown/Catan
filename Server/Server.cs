@@ -207,7 +207,14 @@ namespace Server
 
         static void OnReceive(UserContext context)
         {
-            MessageBroker.ProcessMessage(context);
+            try
+            {
+                MessageBroker.ProcessMessage(context);
+            }
+            catch (Exception ex)
+            {
+                // TODO: log the issue
+            }
             
         }
 
