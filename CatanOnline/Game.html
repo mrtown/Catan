@@ -576,7 +576,7 @@
         var board = globalGameState.Board;
         
         for(var i=0; i<board.Settlements.length; i++)             
-            if (id == board.Settlements[i].ID) {
+            if (id == board.Settlements[i].ID && board.Settlements[i].PlayerID == localID) {
                 var settlementImage = board.Settlements[i].Image;
                 var data = settlementImage.split('_');
                 ctx.drawImage(imageCache['/Image/city_' + data[1]],                     
