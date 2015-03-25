@@ -614,11 +614,20 @@ namespace Catan.Entities.States
 
                     _board.Rolled = roll;
 
+                    string audio = Guid.NewGuid().ToString() + ":dice.m4a";
+                    if (_nextState != null)
+                        _nextState.Audio = audio;
+                    else
+                        this.Audio = audio;
+                    
                     if (roll == 7)
                     {
                         AbstractState s = ProcessRolledSeven();
                         if (s != null)
+                        {
+                            s.Audio = audio;
                             return s;
+                        }                            
                     }
                 }
                 else if (data["action"].ToString() == Entities.StateType.PLAYER_PASS.ToString())
