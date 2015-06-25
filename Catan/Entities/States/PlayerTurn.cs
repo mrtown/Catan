@@ -636,6 +636,7 @@ namespace Catan.Entities.States
                     _board.Rolled = 0;
                     _nextState = new PlayerTurn(_board.GetNextPlayer(_playerID).ID, _board);
                     _nextState.HistoryText = player.Name + " has completed his/her turn.";
+                    _nextState.Audio = Guid.NewGuid().ToString() + ":gogogo.wav";
                 }
                 else if (data["action"].ToString() == Entities.StateType.PLAYER_BUILD.ToString())
                 {
