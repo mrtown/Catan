@@ -223,6 +223,7 @@ namespace Catan.Entities
                 _gameState.PlayerWithMostHarbours = WhoHasMostHarbours();
 
             _gameState.Players.ForEach(p => CalculatePlayerScore(p));
+            _gameState.Players.ForEach(p => CalculateIncomeRating(p));
 
             CheckWinningCondition();
             
@@ -235,6 +236,54 @@ namespace Catan.Entities
             Player player = _gameState.Players.Where(p => p.Score >= winScore).FirstOrDefault();
             if (player != null)
                 _gameState.Winner = player.Name;
+        }
+
+        private void CalculateIncomeRating(Player p)
+        {
+            decimal incomeRating = 0;
+            Dictionary<int, int> sizeByFrequency = new Dictionary<int, int>();
+            var settlements = Settlements.Where(s => s.PlayerID == p.ID).ToList();
+
+            // build lookup
+            foreach (Tile tile in _tiles)
+            {                
+                foreach (Settlement settlement in settlements)
+                {
+                    if (SettlementTileAdjacency[settlement.ID, tile.ID])
+                    {
+                        if (!sizeByFrequency.Keys.Contains(tile.Frequency.FrequencyValue))
+                            sizeByFrequency.Add(tile.Frequency.FrequencyValue, settlement.IsCity ? 2 : 1);
+                        else
+                            sizeByFrequency[tile.Frequency.FrequencyValue] += settlement.IsCity ? 2 : 1;
+                    }
+                }                    
+            }
+
+            // calculate  income rating
+            foreach (var entry in sizeByFrequency)           
+                incomeRating += ((decimal)entry.Value) * GetProbability(entry.Key);
+
+            p.IncomeRating = Math.Round(incomeRating, 3);
+
+        }
+
+        private decimal GetProbability(int frequency)
+        {
+            decimal prob = 0;
+            if (frequency == 7)
+                prob = ((decimal)6 / (decimal)36);
+            if (frequency == 8 || frequency == 6)
+                prob = ((decimal)5 / (decimal)36);
+            if (frequency == 5 || frequency == 9)
+                prob = ((decimal)4 / (decimal)36);
+            if (frequency == 4 || frequency == 10)
+                prob = ((decimal)3 / (decimal)36);
+            if (frequency == 3 || frequency == 11)
+                prob = ((decimal)2 / (decimal)36);
+            if (frequency == 2 || frequency == 12)
+                prob = ((decimal)1 / (decimal)36);
+
+            return prob;
         }
 
         private void CalculatePlayerScore(Player p)

@@ -26,6 +26,7 @@ namespace Catan.Entities
         private int _displayScore;
         private int _longestRoadLength;
         private int _numberOfHarbours;
+        private decimal _incomeRating;
 
         private bool _hasLargestArmy;
         private bool _hasLongestRoad;
@@ -85,6 +86,12 @@ namespace Catan.Entities
                 _heldCards.Add(card);
 
             }
+        }
+
+        public decimal IncomeRating
+        {
+            get { return _incomeRating; }
+            set { _incomeRating = value; }
         }
 
         public void IncrementPlayerResourceByOne(TileType type)
