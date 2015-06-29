@@ -742,7 +742,7 @@
         ctx.fillStyle = color;
         ctx.strokeStyle = 'black';
 
-        ctx.font = '16pt Verdana';
+        ctx.font = '11pt Verdana';
         ctx.fillText(text, x, y);
         ctx.strokeText(text, x, y);
 
@@ -767,13 +767,13 @@
 
         DrawImage(imageCache[scrollImagePath], 1 + xOffset, 5 + yOffset);
 
-        DrawText(player.Name, player.Color, 15 + xOffset, 40 + yOffset);
-        DrawText('Resources: ' + player.TotalNumberOfResources, player.Color, 15 + xOffset, 70 + yOffset);
-        DrawText('Dev Cards: ' + player.NumberOfDevCards, player.Color, 15 + xOffset, 90 + yOffset);
-        DrawText('Knights: ' + player.NumberOfKnights, player.Color, 15 + xOffset, 110 + yOffset);
-        DrawText('Road Length: ' + player.LongestRoadLength, player.Color, 15 + xOffset, 130 + yOffset);
-        DrawText('Victory Points: ' + player.DisplayScore, player.Color, 15 + xOffset, 150 + yOffset);
-        DrawText('IR: ' + player.IncomeRating, player.Color, 15 + xOffset, 170 + yOffset);
+        DrawText(player.Name, player.Color, 15 + xOffset, 35 + yOffset);
+        DrawText('Resources: ' + player.TotalNumberOfResources, player.Color, 15 + xOffset, 55 + yOffset);
+        DrawText('Dev Cards: ' + player.NumberOfDevCards, player.Color, 15 + xOffset, 75 + yOffset);
+        DrawText('Knights: ' + player.NumberOfKnights, player.Color, 15 + xOffset, 95 + yOffset);
+        DrawText('Road Length: ' + player.LongestRoadLength, player.Color, 15 + xOffset, 115 + yOffset);
+        DrawText('Victory Points: ' + player.DisplayScore, player.Color, 15 + xOffset, 135 + yOffset);
+        DrawText('IR: ' + player.IncomeRating, player.Color, 15 + xOffset, 155 + yOffset);
 
         if (player.HasLongestRoad) {
             DrawImage(imageCache['/Image/longestRoad.png'], 15 + xOffset, 155 + yOffset);

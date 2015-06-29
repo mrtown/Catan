@@ -249,6 +249,9 @@ namespace Catan.Entities
             {                
                 foreach (Settlement settlement in settlements)
                 {
+                    if (tile.TileType == Enums.TileType.Dessert)
+                        continue;
+
                     if (SettlementTileAdjacency[settlement.ID, tile.ID])
                     {
                         if (!sizeByFrequency.Keys.Contains(tile.Frequency.FrequencyValue))
