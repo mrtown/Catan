@@ -359,7 +359,7 @@ namespace Catan.Entities
                 if (s.PlayerID == player.ID)
                     foreach (Port p in _ports)
                         if (_gameState.PortSettlementAdjacency[p.ID, s.ID])
-                            harbours += s.IsCity ? 2 : 1;
+                            harbours += 1;
                          
             return harbours;
         }
