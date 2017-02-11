@@ -19,7 +19,8 @@ namespace Server
 
             try
             {
-                StreamReader file = new System.IO.StreamReader(filepath);
+                Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(filepath);
+                StreamReader file = new System.IO.StreamReader(stream);
                 string line = file.ReadLine();
                 while (!string.IsNullOrEmpty(line))
                 {
@@ -50,7 +51,8 @@ namespace Server
 
             try
             {
-                StreamReader file = new System.IO.StreamReader(filePath);
+                Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(filePath);
+                StreamReader file = new System.IO.StreamReader(stream);
                 string line = file.ReadLine();
                 while (!string.IsNullOrEmpty(line))
                 {
@@ -84,10 +86,11 @@ namespace Server
         public static List<DrawCoordinate> ParseCoordinateData(string filePath)
         {
             List<DrawCoordinate> coordinates = new List<DrawCoordinate>();
-
+                        
             try
             {
-                StreamReader file = new System.IO.StreamReader(filePath);
+                Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(filePath);
+                StreamReader file = new System.IO.StreamReader(stream);
                 string line = file.ReadLine();
                 line = line.Replace(" ", string.Empty);
                 string[] coordinateSet = line.Split(':');

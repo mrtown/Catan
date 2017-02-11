@@ -101,19 +101,19 @@ namespace Server
 
         private static void ParseCoordinates()
         {
-            _portCoordinates = FileSystemDataParser.ParseCoordinateData("C:\\projects\\AlchemyServer\\PortCoordinates.txt");
-            _playerCoordinates = FileSystemDataParser.ParseCoordinateData("C:\\projects\\AlchemyServer\\PlayerCoordinates.txt");
-            _tileCoordinates = FileSystemDataParser.ParseCoordinateData("C:\\projects\\AlchemyServer\\TileCoordinates.txt");
-            _settlementCoordinates = FileSystemDataParser.ParseCoordinateData("C:\\projects\\AlchemyServer\\SettlementCoordinates.txt");            
-            _roadCoordinates = FileSystemDataParser.ParseCoordinateData("C:\\projects\\AlchemyServer\\RoadCoordinates.txt");
-            _settlementTileAdjacency = FileSystemDataParser.ParseAdjacentData("C:\\projects\\AlchemyServer\\SettlementTileAdjacency.txt");
-            _roadAdjacency = FileSystemDataParser.ParseAdjacentData("C:\\projects\\AlchemyServer\\RoadAdjacency.txt");
-            _portSettlementAdjacency = FileSystemDataParser.ParseAdjacentData("C:\\projects\\AlchemyServer\\PortSettlementAdjaceny.txt");           
-            _settlementAdjacency = FileSystemDataParser.ParseAdjacentData("C:\\projects\\AlchemyServer\\SettlementAdjacency.txt");
-            _settlementRoadAdjacency = FileSystemDataParser.ParseAdjacentData("C:\\projects\\AlchemyServer\\SettlementRoadAdjacency.txt");
-            _image1RoadIndexes = FileSystemDataParser.ParseRoadImageIndexes("C:\\projects\\AlchemyServer\\image1RoadIndexes.txt");
-            _image2RoadIndexes = FileSystemDataParser.ParseRoadImageIndexes("C:\\projects\\AlchemyServer\\image2RoadIndexes.txt");
-            _image3RoadIndexes = FileSystemDataParser.ParseRoadImageIndexes("C:\\projects\\AlchemyServer\\image3RoadIndexes.txt");
+            _portCoordinates = FileSystemDataParser.ParseCoordinateData("Server.Configuration.PortCoordinates.txt");
+            _playerCoordinates = FileSystemDataParser.ParseCoordinateData("Server.Configuration.PlayerCoordinates.txt");
+            _tileCoordinates = FileSystemDataParser.ParseCoordinateData("Server.Configuration.TileCoordinates.txt");
+            _settlementCoordinates = FileSystemDataParser.ParseCoordinateData("Server.Configuration.SettlementCoordinates.txt");            
+            _roadCoordinates = FileSystemDataParser.ParseCoordinateData("Server.Configuration.RoadCoordinates.txt");
+            _settlementTileAdjacency = FileSystemDataParser.ParseAdjacentData("Server.Configuration.SettlementTileAdjacency.txt");
+            _roadAdjacency = FileSystemDataParser.ParseAdjacentData("Server.Configuration.RoadAdjacency.txt");
+            _portSettlementAdjacency = FileSystemDataParser.ParseAdjacentData("Server.Configuration.PortSettlementAdjaceny.txt");           
+            _settlementAdjacency = FileSystemDataParser.ParseAdjacentData("Server.Configuration.SettlementAdjacency.txt");
+            _settlementRoadAdjacency = FileSystemDataParser.ParseAdjacentData("Server.Configuration.SettlementRoadAdjacency.txt");
+            _image1RoadIndexes = FileSystemDataParser.ParseRoadImageIndexes("Server.Configuration.image1RoadIndexes.txt");
+            _image2RoadIndexes = FileSystemDataParser.ParseRoadImageIndexes("Server.Configuration.image2RoadIndexes.txt");
+            _image3RoadIndexes = FileSystemDataParser.ParseRoadImageIndexes("Server.Configuration.image3RoadIndexes.txt");
         }
 
         public static List<DrawCoordinate> PlayerCoordinates

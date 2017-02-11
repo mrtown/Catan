@@ -633,19 +633,19 @@
         if (value.Control == 'GAME_STATE') {
             ProcessGameState(value.Payload);
         }
-        else if (value.Control == 'PING') {
-            ProcessPing(value.Payload);
-        }
-        else if (value.Control == 'PING_STATUSES') {
-            var x = 10;                     
-            var pingDisplay = '';
-            for (var i = 0; i < globalGameState.Players.length; i++) {
-                var p = globalGameState.Players[i];
-                pingDisplay += p.Name + ' ' + value.Payload[p.Name] + '\n';
-            }
+        //else if (value.Control == 'PING') {
+        //    ProcessPing(value.Payload);
+        //}
+        //else if (value.Control == 'PING_STATUSES') {
+        //    var x = 10;                     
+        //    var pingDisplay = '';
+        //    for (var i = 0; i < globalGameState.Players.length; i++) {
+        //        var p = globalGameState.Players[i];
+        //        pingDisplay += p.Name + ' ' + value.Payload[p.Name] + '\n';
+        //    }
     
-            document.getElementById('ping').innerHTML = pingDisplay;
-        }
+        //    document.getElementById('ping').innerHTML = pingDisplay;
+        //}
         else if (value.Control == 'GAME_CHAT_MESSAGE') {
             var chatWindow = document.getElementById('txtChat');
             chatWindow.innerHTML = chatWindow.innerHTML + '\n' + value.Payload;
