@@ -450,14 +450,32 @@ namespace Catan.Entities
                 }
                 else if (playersWithMaxRoadLength.Count > 1)
                 {
-                    if (_gameState.Players.Exists(p => p.HadLongestRoadLengthDecreased && p.LongestRoadLength == maxRoadLength))
-                    {
-                        _gameState.PlayerWithLongestRoad.HasLongestRoad = false;
-                    }
+                    // the incumbent keeps the title
+                    if (playersWithMaxRoadLength.Exists(p => p.ID == _gameState.PlayerWithLongestRoad.ID))
+                        longestRoadPlayer = _gameState.PlayerWithLongestRoad;
                     else
                     {
-                        longestRoadPlayer = _gameState.PlayerWithLongestRoad;
+                        // this could occur if the incumbent's longest road is severed, 
+                        // leaving two or more others with equal, but also longest road lengths,
+                        // which means none of them get longest road.
+                        longestRoadPlayer = null;
+                        _gameState.PlayerWithLongestRoad.HasLongestRoad = false;
                     }
+
+                    // old logic
+
+                    //if (_gameState.Players.Exists(p => p.HadLongestRoadLengthDecreased && p.LongestRoadLength == maxRoadLength))
+                    //{
+                    //    _gameState.PlayerWithLongestRoad.HasLongestRoad = false;
+                    //}
+                    //else
+                    //{
+                    //    longestRoadPlayer = _gameState.PlayerWithLongestRoad;
+                    //}
+                }
+                else // the incumbents longest road was severed, now nobody has longest road
+                {
+                    _gameState.PlayerWithLongestRoad.HasLongestRoad = false;
                 }
 
                 //int currentLongestRoadLength = _gameState.PlayerWithLongestRoad.LongestRoadLength;
